@@ -108,6 +108,23 @@ function handleRequest(e) {
     var takhassus = data.takhassus || "";
     var submissionId = data.submissionId || ("USTAD-" + Date.now());
 
+    // ডুপ্লিকেট এন্ট্রি প্রতিরোধ (যদি শেষ সারির নাম ও মোবাইল একই হয়)
+    var lastRow = sheet.getLastRow();
+    if (lastRow > 1) {
+      var lastValues = sheet.getRange(lastRow, 2, 1, 3).getValues()[0];
+      var lastFullName = lastValues[0];
+      var lastPhone = (lastValues[2] || "").toString().replace(/'/g, "");
+      var currentPhone = (data.personalPhone || "").toString().replace(/'/g, "");
+
+      if (lastFullName === fullName && lastPhone === currentPhone) {
+        return ContentService.createTextOutput(JSON.stringify({
+          status: 'success',
+          message: 'ইতিমধ্যে সংরক্ষিত হয়েছে (ডুপ্লিকেট প্রতিরোধ)',
+          row: lastRow
+        })).setMimeType(ContentService.MimeType.JSON);
+      }
+    }
+
     var newRow = [
       timestamp,
       fullName,

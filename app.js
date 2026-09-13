@@ -195,10 +195,11 @@ if (urlParams.has('sheet')) {
   if (paramSheet) {
     localStorage.setItem(STORAGE_KEYS.SHEET_URL, paramSheet);
   }
-}
+let isFormSubmitting = false;
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
+  if (isFormSubmitting) return;
 
   // Explicit field validations with precise Bengali toasts
   if (!fullNameInput.value.trim()) {
@@ -313,6 +314,7 @@ form.addEventListener('submit', async (e) => {
   };
 
   // UI Loading
+  isFormSubmitting = true;
   submitBtn.disabled = true;
   submitSpinner.classList.remove('hidden');
   submitText.textContent = 'জমা হচ্ছে...';
@@ -325,23 +327,22 @@ form.addEventListener('submit', async (e) => {
     const fullUrl = `${sheetUrl}?${q}`;
 
     try {
-      // Primary: GET fetch (mode: no-cors) - verified to work 100%
+      // Single verified GET fetch
       await fetch(fullUrl, {
         method: 'GET',
         mode: 'no-cors'
       });
       sheetSaved = true;
     } catch (err1) {
-      console.warn('Fetch note:', err1);
-    }
-
-    // Secondary guarantee: Image Beacon ping (never blocked by CORS or redirects)
-    try {
-      const beacon = new Image();
-      beacon.src = fullUrl;
-      sheetSaved = true;
-    } catch (err2) {
-      console.warn('Beacon note:', err2);
+      console.warn('Fetch note, attempting fallback:', err1);
+      try {
+        // Fallback only if fetch failed
+        const beacon = new Image();
+        beacon.src = fullUrl;
+        sheetSaved = true;
+      } catch (err2) {
+        console.warn('Fallback note:', err2);
+      }
     }
   }
 
@@ -353,6 +354,7 @@ form.addEventListener('submit', async (e) => {
     localStorage.setItem(STORAGE_KEYS.RECORDS, JSON.stringify(list));
   } catch (e) {}
 
+  isFormSubmitting = false;
   submitBtn.disabled = false;
   submitSpinner.classList.add('hidden');
   submitText.textContent = 'জমা দিন';
