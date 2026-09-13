@@ -181,15 +181,14 @@ function populateDawrahYears() {
   }
 }
 
-// ==============================================================================
-// Google Sheet & Form Submission
-// ==============================================================================
+// Google Apps Script Web App URL for ashikpushpo07@gmail.com
+const DEFAULT_GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxA-yZaQHS_qKm5dMBUzJGtp6Tw16JvyKsyeoFuOyyMWN2oQOe14Z13WgQ13Mhk6Lmn9A/exec';
 
 function getSheetUrl() {
-  return localStorage.getItem(STORAGE_KEYS.SHEET_URL) || '';
+  return localStorage.getItem(STORAGE_KEYS.SHEET_URL) || DEFAULT_GOOGLE_SHEET_URL;
 }
 
-// Support passing ?sheet=... in the URL to automatically set the Google Sheet endpoint
+// Support passing ?sheet=... in the URL to override if ever needed
 const urlParams = new URLSearchParams(window.location.search);
 if (urlParams.has('sheet')) {
   const paramSheet = urlParams.get('sheet').trim();
