@@ -1,38 +1,46 @@
 /**
  * ==============================================================================
  * মাদ্রাসার শিক্ষক তথ্য সংগ্রহ - গুগল অ্যাপস স্ক্রিপ্ট (Google Apps Script)
- * স্প্রেডশীট আইডি: 1JUN30Z52QB0oOlhzeZE-CFfqOnUPInH9_2ZIaASDM8g
- * জিমেইল: ashikpushpo07@gmail.com
+ * স্প্রেডশীট: 1JUN30Z52QB0oOlhzeZE-CFfqOnUPInH9_2ZIaASDM8g
+ * একাউন্ট: ashikpushpo07@gmail.com
  * ==============================================================================
  */
 
-// আপনার নির্দিষ্ট গুগল শিটের আইডি
-var SPREADSHEET_ID = "1JUN30Z52QB0oOlhzeZE-CFfqOnUPInH9_2ZIaASDM8g";
-
 function doGet(e) {
-  return ContentService.createTextOutput(JSON.stringify({
-    status: 'success',
-    sheetId: SPREADSHEET_ID,
-    account: 'ashikpushpo07@gmail.com',
-    message: 'গুগল শিট স্ক্রিপ্ট সক্রিয় ও প্রস্তুত আছে!'
-  })).setMimeType(ContentService.MimeType.JSON);
+  return handleRequest(e);
 }
 
 function doPost(e) {
+  return handleRequest(e);
+}
+
+function handleRequest(e) {
   var lock = LockService.getScriptLock();
   lock.tryLock(30000);
 
   try {
-    var doc;
+    // সরাসরি অ্যাক্টিভ শিট নেওয়ার চেষ্টা (সবচেয়ে নিরাপদ ও সরাসরি কার্যকর)
+    var doc = null;
     try {
-      doc = SpreadsheetApp.openById(SPREADSHEET_ID);
-    } catch(err) {
       doc = SpreadsheetApp.getActiveSpreadsheet();
+    } catch (e1) {}
+
+    if (!doc) {
+      try {
+        doc = SpreadsheetApp.openById("1JUN30Z52QB0oOlhzeZE-CFfqOnUPInH9_2ZIaASDM8g");
+      } catch (e2) {}
     }
-    
+
+    if (!doc) {
+      return ContentService.createTextOutput(JSON.stringify({
+        status: 'error',
+        message: 'Google Sheet could not be opened'
+      })).setMimeType(ContentService.MimeType.JSON);
+    }
+
     var sheet = doc.getActiveSheet();
 
-    // হেডার কলাম যদি না থাকে, তৈরি করা
+    // হেডার কলাম না থাকলে স্বয়ংক্রিয়ভাবে তৈরি করা
     if (sheet.getLastRow() === 0) {
       var headers = [
         "টাইমস্ট্যাম্প",
@@ -52,7 +60,7 @@ function doPost(e) {
         "সাবমিশন আইডি"
       ];
       sheet.appendRow(headers);
-      
+
       var headerRange = sheet.getRange(1, 1, 1, headers.length);
       headerRange.setBackground("#064e3b");
       headerRange.setFontColor("#ffffff");
@@ -63,15 +71,25 @@ function doPost(e) {
       sheet.setFrozenRows(1);
     }
 
+    // ডাটা সংগ্রহ (URL-encoded প্যারামিটার অথবা JSON বডি)
     var data = {};
-    if (e.postData && e.postData.contents) {
+    if (e && e.postData && e.postData.contents) {
       try {
         data = JSON.parse(e.postData.contents);
       } catch (err) {
         data = e.parameter || {};
       }
-    } else if (e.parameter) {
+    } else if (e && e.parameter) {
       data = e.parameter;
+    }
+
+    // যদি কোনো প্যারামিটার না থাকে তবে শুধুমাত্র স্ট্যাটাস চেক
+    if (!data.fullName && !data.personalPhone) {
+      return ContentService.createTextOutput(JSON.stringify({
+        status: 'success',
+        sheet: doc.getName(),
+        message: 'গুগল শিট স্ক্রিপ্ট সক্রিয় ও প্রস্তুত আছে!'
+      })).setMimeType(ContentService.MimeType.JSON);
     }
 
     var timestamp = Utilities.formatDate(new Date(), "Asia/Dhaka", "dd/MM/yyyy hh:mm:ss a");
@@ -116,7 +134,7 @@ function doPost(e) {
 
     return ContentService.createTextOutput(JSON.stringify({
       status: 'success',
-      message: 'তথ্য সরাসরি আপনার গুগল শিটে সংরক্ষিত হয়েছে!',
+      message: 'তথ্য সফলভাবে গুগল শিটে সংরক্ষিত হয়েছে!',
       row: lastRow
     })).setMimeType(ContentService.MimeType.JSON);
 

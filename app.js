@@ -321,16 +321,31 @@ form.addEventListener('submit', async (e) => {
   let sheetSaved = false;
 
   if (sheetUrl && sheetUrl.startsWith('http')) {
+    // 1. Prepare standard URLSearchParams
+    const formParams = new URLSearchParams();
+    for (const key in payload) {
+      formParams.append(key, payload[key]);
+    }
+
     try {
+      // POST with URLSearchParams (allowed in no-cors without triggering preflight or errors)
       await fetch(sheetUrl, {
         method: 'POST',
         mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: formParams
       });
       sheetSaved = true;
-    } catch (err) {
-      console.warn('Google Sheet send note:', err);
+    } catch (err1) {
+      console.warn('POST failed, trying fallback:', err1);
+      try {
+        // Fallback: GET request query params
+        const q = formParams.toString();
+        const beacon = new Image();
+        beacon.src = `${sheetUrl}?${q}`;
+        sheetSaved = true;
+      } catch (err2) {
+        console.error('All sheet dispatches failed:', err2);
+      }
     }
   }
 
