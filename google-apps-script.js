@@ -19,7 +19,6 @@ function handleRequest(e) {
   lock.tryLock(30000);
 
   try {
-    // সরাসরি অ্যাক্টিভ শিট নেওয়ার চেষ্টা (সবচেয়ে নিরাপদ ও সরাসরি কার্যকর)
     var doc = null;
     try {
       doc = SpreadsheetApp.getActiveSpreadsheet();
@@ -40,28 +39,33 @@ function handleRequest(e) {
 
     var sheet = doc.getActiveSheet();
 
-    // হেডার কলাম না থাকলে স্বয়ংক্রিয়ভাবে তৈরি করা
-    if (sheet.getLastRow() === 0) {
-      var headers = [
-        "টাইমস্ট্যাম্প",
-        "পূর্ণ নাম",
-        "পিতার নাম",
-        "ব্যক্তিগত মোবাইল নম্বর",
-        "অভিভাবক / ২য় নম্বর",
-        "জেলা",
-        "উপজেলা / থানা",
-        "গ্রাম ও ডাকঘর",
-        "জন্ম তারিখ",
-        "মাদ্রাসায় নিয়োগের তারিখ",
-        "ফারেগ প্রতিষ্ঠান (দাওরা মাদ্রাসা)",
-        "দাওরা পাশের সন",
-        "দাওরার ফলাফল (বিভাগ)",
-        "তাখাসসুসাত (উচ্চতর ডিগ্রি)",
-        "সাবমিশন আইডি"
-      ];
-      sheet.appendRow(headers);
+    // প্রমিত হেডার তালিকা
+    var standardHeaders = [
+      "টাইমস্ট্যাম্প",
+      "পূর্ণ নাম",
+      "পিতার নাম",
+      "ব্যক্তিগত মোবাইল নম্বর",
+      "অভিভাবক / ২য় নম্বর",
+      "জেলা",
+      "উপজেলা / থানা",
+      "গ্রাম ও ডাকঘর",
+      "জন্ম তারিখ",
+      "মাদ্রাসায় নিয়োগের তারিখ",
+      "হাফেজে কুরআন (হিফয)",
+      "ফারেগ প্রতিষ্ঠান (দাওরা মাদ্রাসা)",
+      "দাওরা পাশের সন",
+      "দাওরার ফলাফল (বিভাগ)",
+      "তাখাসসুসাত (উচ্চতর ডিগ্রি)",
+      "সাবমিশন আইডি"
+    ];
 
-      var headerRange = sheet.getRange(1, 1, 1, headers.length);
+    var lastRow = sheet.getLastRow();
+    var lastCol = sheet.getLastColumn();
+
+    // নতুন শিট হলে হেডার কলাম তৈরি করা
+    if (lastRow === 0 || lastCol === 0) {
+      sheet.appendRow(standardHeaders);
+      var headerRange = sheet.getRange(1, 1, 1, standardHeaders.length);
       headerRange.setBackground("#064e3b");
       headerRange.setFontColor("#ffffff");
       headerRange.setFontWeight("bold");
@@ -69,6 +73,28 @@ function handleRequest(e) {
       headerRange.setVerticalAlignment("middle");
       sheet.setRowHeight(1, 38);
       sheet.setFrozenRows(1);
+      lastCol = standardHeaders.length;
+    } else {
+      // যদি শিট আগে থেকেই থাকে কিন্তু 'হাফেজে কুরআন' কলাম না থাকে, তবে স্বয়ংক্রিয়ভাবে হেডার যোগ করা
+      var curHeaders = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+      var hasHafiz = false;
+      for (var h = 0; h < curHeaders.length; h++) {
+        var hTitle = curHeaders[h].toString();
+        if (hTitle.indexOf("হাফেজ") !== -1 || hTitle.indexOf("হিফয") !== -1) {
+          hasHafiz = true;
+          break;
+        }
+      }
+      if (!hasHafiz) {
+        lastCol++;
+        var newColCell = sheet.getRange(1, lastCol);
+        newColCell.setValue("হাফেজে কুরআন (হিফয)");
+        newColCell.setBackground("#064e3b");
+        newColCell.setFontColor("#ffffff");
+        newColCell.setFontWeight("bold");
+        newColCell.setHorizontalAlignment("center");
+        newColCell.setVerticalAlignment("middle");
+      }
     }
 
     // ডাটা সংগ্রহ (URL-encoded প্যারামিটার অথবা JSON বডি)
@@ -102,6 +128,7 @@ function handleRequest(e) {
     var addressDetails = data.addressDetails || "";
     var birthDate = data.birthDate || "";
     var joiningDate = data.joiningDate || "";
+    var isHafiz = data.isHafiz || "না";
     var dawrahMadrasa = data.dawrahMadrasa || "";
     var dawrahYear = data.dawrahYear || "";
     var dawrahResult = data.dawrahResult || "";
@@ -109,7 +136,7 @@ function handleRequest(e) {
     var submissionId = data.submissionId || ("USTAD-" + Date.now());
 
     // ডুপ্লিকেট এন্ট্রি প্রতিরোধ (যদি শেষ সারির নাম ও মোবাইল একই হয়)
-    var lastRow = sheet.getLastRow();
+    lastRow = sheet.getLastRow();
     if (lastRow > 1) {
       var lastValues = sheet.getRange(lastRow, 2, 1, 3).getValues()[0];
       var lastFullName = lastValues[0];
@@ -125,34 +152,56 @@ function handleRequest(e) {
       }
     }
 
-    var newRow = [
-      timestamp,
-      fullName,
-      fatherName,
-      personalPhone,
-      guardianPhone,
-      district,
-      thana,
-      addressDetails,
-      birthDate,
-      joiningDate,
-      dawrahMadrasa,
-      dawrahYear,
-      dawrahResult,
-      takhassus,
-      submissionId
-    ];
+    // কলাম হেডারের সাথে মান ডায়নামিকালি মেলানো
+    var activeHeaders = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+    var fieldMap = {
+      "টাইমস্ট্যাম্প": timestamp,
+      "পূর্ণ নাম": fullName,
+      "পিতার নাম": fatherName,
+      "ব্যক্তিগত মোবাইল নম্বর": personalPhone,
+      "অভিভাবক / ২য় নম্বর": guardianPhone,
+      "জেলা": district,
+      "উপজেলা / থানা": thana,
+      "গ্রাম ও ডাকঘর": addressDetails,
+      "জন্ম তারিখ": birthDate,
+      "মাদ্রাসায় নিয়োগের তারিখ": joiningDate,
+      "হাফেজে কুরআন (হিফয)": isHafiz,
+      "হাফেজে কুরআন": isHafiz,
+      "হিফয": isHafiz,
+      "ফারেগ প্রতিষ্ঠান (দাওরা মাদ্রাসা)": dawrahMadrasa,
+      "ফারেগ প্রতিষ্ঠান": dawrahMadrasa,
+      "দাওরা পাশের সন": dawrahYear,
+      "দাওরার ফলাফল (বিভাগ)": dawrahResult,
+      "তাখাসসুসাত (উচ্চতর ডিগ্রি)": takhassus,
+      "তাখাসসুসাত": takhassus,
+      "সাবমিশন আইডি": submissionId
+    };
+
+    var newRow = [];
+    for (var c = 0; c < activeHeaders.length; c++) {
+      var headName = activeHeaders[c].toString().trim();
+      var val = fieldMap[headName];
+      if (val === undefined) {
+        for (var k in fieldMap) {
+          if (headName.indexOf(k) !== -1 || k.indexOf(headName) !== -1) {
+            val = fieldMap[k];
+            break;
+          }
+        }
+      }
+      newRow.push(val !== undefined ? val : "");
+    }
 
     sheet.appendRow(newRow);
 
-    var lastRow = sheet.getLastRow();
-    var rowRange = sheet.getRange(lastRow, 1, 1, newRow.length);
+    var finalRow = sheet.getLastRow();
+    var rowRange = sheet.getRange(finalRow, 1, 1, newRow.length);
     rowRange.setVerticalAlignment("middle");
 
     return ContentService.createTextOutput(JSON.stringify({
       status: 'success',
       message: 'তথ্য সফলভাবে গুগল শিটে সংরক্ষিত হয়েছে!',
-      row: lastRow
+      row: finalRow
     })).setMimeType(ContentService.MimeType.JSON);
 
   } catch (error) {

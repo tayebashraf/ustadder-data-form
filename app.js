@@ -23,6 +23,7 @@ const thanaSelect = document.getElementById('thanaSelect');
 const customThanaBox = document.getElementById('customThanaBox');
 const customThanaInput = document.getElementById('customThanaInput');
 const addressDetailsInput = document.getElementById('addressDetails');
+const isHafizSelect = document.getElementById('isHafizSelect');
 const dawrahMadrasaInput = document.getElementById('dawrahMadrasa');
 const dawrahYearSelect = document.getElementById('dawrahYear');
 const dawrahResultSelect = document.getElementById('dawrahResult');
@@ -39,6 +40,7 @@ const submitText = document.getElementById('submitText');
 const successModal = document.getElementById('successModal');
 const newEntryBtn = document.getElementById('newEntryBtn');
 const rName = document.getElementById('rName');
+const rHafiz = document.getElementById('rHafiz');
 const rFather = document.getElementById('rFather');
 const rPhone = document.getElementById('rPhone');
 const rAddress = document.getElementById('rAddress');
@@ -274,6 +276,12 @@ form.addEventListener('submit', async (e) => {
     return;
   }
 
+  if (!isHafizSelect.value) {
+    isHafizSelect.focus();
+    showToast('অনুগ্রহ করে আপনি হাফেজে কুরআন কি না নির্বাচন করুন', true);
+    return;
+  }
+
   if (!dawrahMadrasaInput.value.trim()) {
     dawrahMadrasaInput.focus();
     showToast('অনুগ্রহ করে ফারেগ মাদ্রাসার নাম লিখুন', true);
@@ -308,6 +316,7 @@ form.addEventListener('submit', async (e) => {
     addressDetails: addressDetailsInput.value.trim(),
     birthDate: birthDateInput.value,
     joiningDate: joiningDateInput.value,
+    isHafiz: isHafizSelect.value,
     dawrahMadrasa: dawrahMadrasaInput.value.trim(),
     dawrahYear: dawrahYearSelect.value,
     dawrahResult: dawrahResultSelect.value,
@@ -363,6 +372,7 @@ form.addEventListener('submit', async (e) => {
 
   // Show Success Modal safely
   if (rName) rName.textContent = payload.fullName;
+  if (rHafiz) rHafiz.textContent = payload.isHafiz;
   if (rFather) rFather.textContent = payload.fatherName;
   if (rPhone) rPhone.textContent = toBengaliDigits(payload.personalPhone);
   if (rAddress) rAddress.textContent = `${payload.addressDetails}, থানা: ${payload.thana}, জেলা: ${payload.district}`;
