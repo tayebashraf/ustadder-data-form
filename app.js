@@ -195,6 +195,8 @@ if (urlParams.has('sheet')) {
   if (paramSheet) {
     localStorage.setItem(STORAGE_KEYS.SHEET_URL, paramSheet);
   }
+}
+
 let isFormSubmitting = false;
 
 form.addEventListener('submit', async (e) => {
