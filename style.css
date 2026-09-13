@@ -1,5 +1,5 @@
 /* ==========================================================================
-   কালপুরুষ ফন্ট এবং মোবাইল-বান্ধব মার্জিত ফর্ম স্টাইল
+   কালপুরুষ ফন্ট এবং আধুনিক গ্লাসমরফিজম (Glassmorphism) মোবাইল-বান্ধব ফর্ম
    ========================================================================== */
 
 @font-face {
@@ -15,58 +15,103 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Kalpurush', 'SolaimanLipi', sans-serif !important;
+  font-family: 'Kalpurush', 'SolaimanLipi', -apple-system, sans-serif !important;
 }
 
 :root {
   --primary: #047857;
   --primary-hover: #065f46;
-  --bg-page: #f8fafc;
-  --bg-card: #ffffff;
-  --border-color: #cbd5e1;
+  --primary-light: #ecfdf5;
+  --accent-gold: #d97706;
+
+  /* Glassmorphism Tokens */
+  --glass-bg: rgba(255, 255, 255, 0.88);
+  --glass-border: rgba(255, 255, 255, 0.7);
+  --glass-shadow: 0 16px 36px rgba(4, 120, 87, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04);
+  --glass-inner-section: rgba(248, 250, 252, 0.78);
+  --glass-inner-border: rgba(226, 232, 240, 0.8);
+
   --text-main: #0f172a;
   --text-sub: #475569;
   --text-muted: #64748b;
   --error: #dc2626;
-  --radius: 8px;
+  --radius: 12px;
 }
 
 body {
-  background-color: var(--bg-page);
+  background: radial-gradient(circle at 10% 10%, #d1fae5 0%, #f0fdf4 35%, #f8fafc 80%);
+  background-attachment: fixed;
   color: var(--text-main);
   line-height: 1.5;
   font-size: 16px;
+  min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Ambient Background Lights */
+body::before {
+  content: "";
+  position: fixed;
+  top: -100px;
+  right: -100px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.22), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  bottom: -80px;
+  left: -80px;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(217, 119, 6, 0.15), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* Page Wrap */
 .page-wrap {
+  position: relative;
+  z-index: 1;
   max-width: 680px;
   margin: 1.5rem auto 3rem auto;
   padding: 0 1rem;
 }
 
+/* Glassmorphism Main Card */
 .form-box {
-  background: var(--bg-card);
-  border: 1px solid #e2e8f0;
+  background: var(--glass-bg);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
-  padding: 1.75rem 1.75rem;
+  box-shadow: var(--glass-shadow);
+  padding: 2rem 1.85rem;
+  transition: transform 0.3s ease;
 }
 
-/* Clean Header: শুধুমাত্র 'আপনার তথ্য দিন' */
+/* Clean Header */
 .clean-header {
   text-align: center;
   padding-bottom: 1.25rem;
   margin-bottom: 1.5rem;
-  border-bottom: 2px solid #e2e8f0;
+  border-bottom: 2px solid rgba(4, 120, 87, 0.12);
 }
 
 .main-heading {
-  font-size: 1.75rem;
+  font-size: 1.85rem;
   font-weight: 700;
   color: var(--primary);
   margin-bottom: 0.25rem;
+  letter-spacing: -0.01em;
 }
 
 .sub-heading {
@@ -74,23 +119,37 @@ body {
   color: var(--text-sub);
 }
 
-/* Form Sections */
+/* Glass Inner Sections */
 .address-section,
 .academic-section {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: var(--radius);
-  padding: 1.1rem 1.1rem 0.4rem 1.1rem;
-  margin: 1.25rem 0;
+  background: var(--glass-inner-section);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-inner-border);
+  border-radius: 10px;
+  padding: 1.2rem 1.15rem 0.4rem 1.15rem;
+  margin: 1.35rem 0;
 }
 
 .section-title {
   font-size: 1.05rem;
   font-weight: 700;
   color: var(--primary);
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.9rem;
   padding-bottom: 0.35rem;
-  border-bottom: 1.5px solid #cbd5e1;
+  border-bottom: 1.5px solid rgba(4, 120, 87, 0.18);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.section-title::before {
+  content: "";
+  width: 6px;
+  height: 14px;
+  background: var(--primary);
+  border-radius: 2px;
+  display: inline-block;
 }
 
 /* Field Blocks */
@@ -101,7 +160,7 @@ body {
 .form-row {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0.85rem;
+  gap: 0.9rem;
 }
 
 .field-label {
@@ -117,30 +176,37 @@ body {
   font-weight: 700;
 }
 
-/* Inputs & Selects */
+/* Inputs & Selects with Smooth Glass Styling */
 input[type="text"],
 input[type="tel"],
 input[type="date"],
 input[type="url"],
 select {
   width: 100%;
-  min-height: 44px;
+  min-height: 45px;
   padding: 0.55rem 0.85rem;
   font-size: 0.95rem;
   color: var(--text-main);
-  background: #ffffff;
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(203, 213, 225, 0.9);
+  border-radius: 8px;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   -webkit-appearance: none;
   appearance: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+input:hover,
+select:hover {
+  border-color: rgba(4, 120, 87, 0.45);
 }
 
 input:focus,
 select:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.15);
+  box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.18);
+  background: #ffffff;
 }
 
 .select-wrap {
@@ -150,7 +216,7 @@ select:focus {
 .select-wrap::after {
   content: "";
   position: absolute;
-  right: 0.9rem;
+  right: 0.95rem;
   top: 50%;
   transform: translateY(-50%);
   width: 0;
@@ -167,7 +233,7 @@ select {
 }
 
 select:disabled {
-  background: #f1f5f9;
+  background: rgba(241, 245, 249, 0.7);
   cursor: not-allowed;
   opacity: 0.65;
 }
@@ -185,34 +251,36 @@ select:disabled {
 
 /* Submit Wrap & Button */
 .submit-wrap {
-  margin-top: 1.5rem;
+  margin-top: 1.6rem;
   text-align: center;
 }
 
 .submit-btn {
   width: 100%;
   min-height: 48px;
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary-hover) 0%, var(--primary) 100%);
   color: #ffffff;
   font-size: 1.15rem;
   font-weight: 700;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  box-shadow: 0 3px 8px rgba(4, 120, 87, 0.25);
+  box-shadow: 0 4px 14px rgba(4, 120, 87, 0.3);
 }
 
 .submit-btn:hover {
-  background: var(--primary-hover);
+  background: linear-gradient(135deg, #022c22 0%, var(--primary-hover) 100%);
+  box-shadow: 0 6px 18px rgba(4, 120, 87, 0.4);
+  transform: translateY(-1px);
 }
 
 .submit-btn:active {
-  transform: translateY(1px);
+  transform: translateY(0);
 }
 
 .spinner {
@@ -241,14 +309,13 @@ select:disabled {
   opacity: 0.2;
   cursor: pointer;
   font-size: 1rem;
+  transition: opacity 0.2s;
 }
 .discreet-link:hover {
   opacity: 0.8;
 }
 
-/* ==========================================================================
-   Success Dialog & Animated Jazakallah Text
-   ========================================================================== */
+/* Success Modal with Glassmorphism */
 .receipt-dialog {
   border: none;
   background: transparent;
@@ -257,34 +324,37 @@ select:disabled {
   width: 92%;
   margin: auto;
   border-radius: var(--radius);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
 }
 
 .receipt-dialog::backdrop {
   background: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .success-box {
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: var(--radius);
-  padding: 2rem 1.6rem;
+  padding: 2.25rem 1.75rem;
   text-align: center;
 }
 
 /* Arabic Jazakallah Animation */
 .arabic-jazakallah-wrap {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.85rem;
 }
 
 .arabic-jazakallah {
   font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade', serif !important;
-  font-size: 2.2rem;
+  font-size: 2.3rem;
   font-weight: 700;
   line-height: 1.4;
   direction: rtl;
   color: #047857;
-  text-shadow: 0 2px 10px rgba(4, 120, 87, 0.2);
   display: inline-block;
   transform-origin: center center;
   animation: jazakallahPop 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, shimmerGlow 3s ease-in-out infinite alternate;
@@ -313,7 +383,7 @@ select:disabled {
     text-shadow: 0 2px 10px rgba(4, 120, 87, 0.25);
   }
   100% {
-    text-shadow: 0 2px 18px rgba(217, 119, 6, 0.45);
+    text-shadow: 0 2px 20px rgba(217, 119, 6, 0.5);
     color: #065f46;
   }
 }
@@ -323,29 +393,29 @@ select:disabled {
   align-items: center;
   justify-content: center;
   margin-top: 0.15rem;
-  color: #d97706;
-  font-size: 0.85rem;
-  opacity: 0.75;
+  color: var(--accent-gold);
+  font-size: 0.9rem;
+  opacity: 0.8;
 }
 
 .success-heading {
-  font-size: 1.35rem;
+  font-size: 1.4rem;
   font-weight: 700;
   color: #0f172a;
-  margin-bottom: 1.15rem;
+  margin-bottom: 1.25rem;
   line-height: 1.3;
 }
 
-/* Notice Card: ফিঙ্গারপ্রিন্ট এবং ছবি */
+/* Notice Card */
 .notice-card {
-  background: #f0fdf4;
+  background: rgba(240, 253, 244, 0.88);
   border: 1.5px solid #86efac;
-  border-radius: 8px;
-  padding: 0.9rem 1rem;
+  border-radius: 10px;
+  padding: 0.95rem 1.1rem;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1.25rem;
+  gap: 0.85rem;
+  margin-bottom: 1.35rem;
   text-align: left;
 }
 
@@ -362,7 +432,7 @@ select:disabled {
 }
 
 .notice-text {
-  font-size: 0.925rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: #166534;
   line-height: 1.45;
@@ -370,14 +440,14 @@ select:disabled {
 
 /* Mini summary */
 .mini-summary {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  padding: 0.6rem 0.85rem;
-  margin-bottom: 1.25rem;
+  background: rgba(248, 250, 252, 0.85);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 8px;
+  padding: 0.65rem 0.9rem;
+  margin-bottom: 1.35rem;
   display: flex;
   justify-content: space-around;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
 }
 
 .summary-line {
@@ -396,20 +466,22 @@ select:disabled {
 
 .action-btn {
   width: 100%;
-  min-height: 44px;
+  min-height: 46px;
   padding: 0.65rem 1.5rem;
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary-hover), var(--primary));
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(4, 120, 87, 0.25);
 }
 
 .action-btn:hover {
-  background: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(4, 120, 87, 0.35);
 }
 
 /* Toast */
@@ -424,30 +496,32 @@ select:disabled {
 }
 
 .toast {
-  padding: 0.65rem 1rem;
-  background: #ffffff;
+  padding: 0.75rem 1.15rem;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(10px);
   color: var(--text-main);
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   border-left: 4px solid var(--primary);
-  font-size: 0.9rem;
+  font-size: 0.925rem;
 }
 
 .toast.toast-error {
   border-left-color: var(--error);
 }
 
-/* Mobile View */
+/* Mobile View (অল্প জায়গার মধ্যে মসৃণ গ্লাসমরফিজম) */
 @media (max-width: 600px) {
   .page-wrap {
     margin: 0.75rem auto 2rem auto;
-    padding: 0 0.5rem;
+    padding: 0 0.65rem;
   }
   .form-box {
-    padding: 1.2rem 1rem;
+    padding: 1.35rem 1.15rem;
+    border-radius: 10px;
   }
   .main-heading {
-    font-size: 1.45rem;
+    font-size: 1.5rem;
   }
   .form-row {
     grid-template-columns: 1fr;
@@ -455,10 +529,10 @@ select:disabled {
   }
   .address-section,
   .academic-section {
-    padding: 0.85rem 0.75rem 0.25rem 0.75rem;
+    padding: 0.95rem 0.85rem 0.25rem 0.85rem;
   }
   .arabic-jazakallah {
-    font-size: 1.85rem;
+    font-size: 1.95rem;
   }
 }
 
