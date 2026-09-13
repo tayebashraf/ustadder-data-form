@@ -1,0 +1,467 @@
+/* ==========================================================================
+   কালপুরুষ ফন্ট এবং মোবাইল-বান্ধব মার্জিত ফর্ম স্টাইল
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Kalpurush';
+  src: url('Kalpurush-v0.258.woff2') format('woff2'),
+       url('Kalpurush-v0.258.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Kalpurush', 'SolaimanLipi', sans-serif !important;
+}
+
+:root {
+  --primary: #047857;
+  --primary-hover: #065f46;
+  --bg-page: #f8fafc;
+  --bg-card: #ffffff;
+  --border-color: #cbd5e1;
+  --text-main: #0f172a;
+  --text-sub: #475569;
+  --text-muted: #64748b;
+  --error: #dc2626;
+  --radius: 8px;
+}
+
+body {
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  line-height: 1.5;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Page Wrap */
+.page-wrap {
+  max-width: 680px;
+  margin: 1.5rem auto 3rem auto;
+  padding: 0 1rem;
+}
+
+.form-box {
+  background: var(--bg-card);
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  padding: 1.75rem 1.75rem;
+}
+
+/* Clean Header: শুধুমাত্র 'আপনার তথ্য দিন' */
+.clean-header {
+  text-align: center;
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.main-heading {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0.25rem;
+}
+
+.sub-heading {
+  font-size: 0.95rem;
+  color: var(--text-sub);
+}
+
+/* Form Sections */
+.address-section,
+.academic-section {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius);
+  padding: 1.1rem 1.1rem 0.4rem 1.1rem;
+  margin: 1.25rem 0;
+}
+
+.section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1.5px solid #cbd5e1;
+}
+
+/* Field Blocks */
+.field-block {
+  margin-bottom: 1rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.85rem;
+}
+
+.field-label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 0.35rem;
+}
+
+.req-star {
+  color: var(--error);
+  font-weight: 700;
+}
+
+/* Inputs & Selects */
+input[type="text"],
+input[type="tel"],
+input[type="date"],
+input[type="url"],
+select {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input:focus,
+select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.15);
+}
+
+.select-wrap {
+  position: relative;
+}
+
+.select-wrap::after {
+  content: "";
+  position: absolute;
+  right: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid var(--text-muted);
+  pointer-events: none;
+}
+
+select {
+  padding-right: 2rem;
+  cursor: pointer;
+}
+
+select:disabled {
+  background: #f1f5f9;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.help-text {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+.extra-input-box {
+  margin-top: 0.5rem;
+}
+
+/* Submit Wrap & Button */
+.submit-wrap {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.submit-btn {
+  width: 100%;
+  min-height: 48px;
+  background: var(--primary);
+  color: #ffffff;
+  font-size: 1.15rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 3px 8px rgba(4, 120, 87, 0.25);
+}
+
+.submit-btn:hover {
+  background: var(--primary-hover);
+}
+
+.submit-btn:active {
+  transform: translateY(1px);
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Discreet footer */
+.clean-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.discreet-link {
+  background: none;
+  border: none;
+  opacity: 0.2;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.discreet-link:hover {
+  opacity: 0.8;
+}
+
+/* ==========================================================================
+   Success Dialog & Animated Jazakallah Text
+   ========================================================================== */
+.receipt-dialog {
+  border: none;
+  background: transparent;
+  padding: 0;
+  max-width: 500px;
+  width: 92%;
+  margin: auto;
+  border-radius: var(--radius);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+}
+
+.receipt-dialog::backdrop {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(5px);
+}
+
+.success-box {
+  background: #ffffff;
+  border-radius: var(--radius);
+  padding: 2rem 1.6rem;
+  text-align: center;
+}
+
+/* Arabic Jazakallah Animation */
+.arabic-jazakallah-wrap {
+  margin-bottom: 0.75rem;
+}
+
+.arabic-jazakallah {
+  font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade', serif !important;
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.4;
+  direction: rtl;
+  color: #047857;
+  text-shadow: 0 2px 10px rgba(4, 120, 87, 0.2);
+  display: inline-block;
+  transform-origin: center center;
+  animation: jazakallahPop 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, shimmerGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes jazakallahPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.6) translateY(24px);
+    filter: blur(8px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.08) translateY(-3px);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes shimmerGlow {
+  0% {
+    text-shadow: 0 2px 10px rgba(4, 120, 87, 0.25);
+  }
+  100% {
+    text-shadow: 0 2px 18px rgba(217, 119, 6, 0.45);
+    color: #065f46;
+  }
+}
+
+.arabic-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.15rem;
+  color: #d97706;
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+
+.success-heading {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 1.15rem;
+  line-height: 1.3;
+}
+
+/* Notice Card: ফিঙ্গারপ্রিন্ট এবং ছবি */
+.notice-card {
+  background: #f0fdf4;
+  border: 1.5px solid #86efac;
+  border-radius: 8px;
+  padding: 0.9rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  text-align: left;
+}
+
+.notice-icon {
+  width: 28px;
+  height: 28px;
+  color: #15803d;
+  flex-shrink: 0;
+}
+
+.notice-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.notice-text {
+  font-size: 0.925rem;
+  font-weight: 600;
+  color: #166534;
+  line-height: 1.45;
+}
+
+/* Mini summary */
+.mini-summary {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 0.6rem 0.85rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  justify-content: space-around;
+  font-size: 0.875rem;
+}
+
+.summary-line {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.s-label {
+  color: var(--text-muted);
+}
+
+.s-val {
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.action-btn {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.65rem 1.5rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.action-btn:hover {
+  background: var(--primary-hover);
+}
+
+/* Toast */
+.toast-box {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.toast {
+  padding: 0.65rem 1rem;
+  background: #ffffff;
+  color: var(--text-main);
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-left: 4px solid var(--primary);
+  font-size: 0.9rem;
+}
+
+.toast.toast-error {
+  border-left-color: var(--error);
+}
+
+/* Mobile View */
+@media (max-width: 600px) {
+  .page-wrap {
+    margin: 0.75rem auto 2rem auto;
+    padding: 0 0.5rem;
+  }
+  .form-box {
+    padding: 1.2rem 1rem;
+  }
+  .main-heading {
+    font-size: 1.45rem;
+  }
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .address-section,
+  .academic-section {
+    padding: 0.85rem 0.75rem 0.25rem 0.75rem;
+  }
+  .arabic-jazakallah {
+    font-size: 1.85rem;
+  }
+}
+
+.hidden {
+  display: none !important;
+}

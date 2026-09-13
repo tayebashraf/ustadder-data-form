@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>আপনার তথ্য দিন</title>
+  
+  <!-- Arabic Font for Calligraphy -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Main Container -->
+  <main class="page-wrap">
+    <div class="form-box">
+      
+      <!-- Top Clean Header: শুধুমাত্র 'আপনার তথ্য দিন' -->
+      <header class="clean-header">
+        <h1 class="main-heading">আপনার তথ্য দিন</h1>
+        <p class="sub-heading">অনুগ্রহ করে নিচের তথ্যগুলো সঠিকভাবে পূরণ করে জমা দিন</p>
+      </header>
+
+      <!-- Main Form -->
+      <form id="teacherForm" novalidate>
+        
+        <!-- SECTION 1: পরিচয় -->
+        <div class="field-block">
+          <label for="fullName" class="field-label">
+            পূর্ণ নাম <span class="req-star">*</span>
+          </label>
+          <input 
+            type="text" 
+            id="fullName" 
+            name="fullName" 
+            required 
+            placeholder="আপনার পূর্ণ নাম লিখুন"
+            autocomplete="name"
+          >
+        </div>
+
+        <div class="field-block">
+          <label for="fatherName" class="field-label">
+            পিতার নাম <span class="req-star">*</span>
+          </label>
+          <input 
+            type="text" 
+            id="fatherName" 
+            name="fatherName" 
+            required 
+            placeholder="পিতার নাম লিখুন"
+          >
+        </div>
+
+        <!-- জন্ম তারিখ ও নিয়োগের তারিখ -->
+        <div class="form-row">
+          <div class="field-block">
+            <label for="birthDate" class="field-label">
+              জন্ম তারিখ <span class="req-star">*</span>
+            </label>
+            <input 
+              type="date" 
+              id="birthDate" 
+              name="birthDate" 
+              required
+            >
+          </div>
+
+          <div class="field-block">
+            <label for="joiningDate" class="field-label">
+              মাদ্রাসায় নিয়োগের তারিখ <span class="req-star">*</span>
+            </label>
+            <input 
+              type="date" 
+              id="joiningDate" 
+              name="joiningDate" 
+              required
+            >
+          </div>
+        </div>
+
+        <!-- মোবাইল নম্বরসমূহ -->
+        <div class="form-row">
+          <div class="field-block">
+            <label for="personalPhone" class="field-label">
+              ব্যক্তিগত মোবাইল নম্বর <span class="req-star">*</span>
+            </label>
+            <input 
+              type="tel" 
+              id="personalPhone" 
+              name="personalPhone" 
+              required 
+              placeholder="017XXXXXXXX বা ০১৭১XXXXXXX"
+              maxlength="14"
+              autocomplete="tel"
+            >
+            <span class="help-text">১১ ডিজিটের মোবাইল নম্বর</span>
+          </div>
+
+          <div class="field-block">
+            <label for="guardianPhone" class="field-label">
+              অভিভাবকের নম্বর / দ্বিতীয় নম্বর
+            </label>
+            <input 
+              type="tel" 
+              id="guardianPhone" 
+              name="guardianPhone" 
+              placeholder="বিকল্প যোগাযোগ নম্বর (ঐচ্ছিক)"
+              maxlength="14"
+            >
+            <span class="help-text">জরুরি যোগাযোগের নম্বর</span>
+          </div>
+        </div>
+
+        <!-- স্থায়ী ঠিকানা -->
+        <div class="address-section">
+          <div class="section-title">স্থায়ী ঠিকানা</div>
+
+          <div class="form-row">
+            <div class="field-block">
+              <label for="districtSelect" class="field-label">
+                জেলা <span class="req-star">*</span>
+              </label>
+              <div class="select-wrap">
+                <select id="districtSelect" name="district" required>
+                  <option value="" disabled selected>জেলা নির্বাচন করুন</option>
+                  <!-- 64 districts -->
+                </select>
+              </div>
+            </div>
+
+            <div class="field-block">
+              <label for="thanaSelect" class="field-label">
+                থানা / উপজেলা <span class="req-star">*</span>
+              </label>
+              <div class="select-wrap">
+                <select id="thanaSelect" name="thana" required disabled>
+                  <option value="" disabled selected>আগে জেলা নির্বাচন করুন</option>
+                </select>
+              </div>
+              <div id="customThanaBox" class="extra-input-box hidden">
+                <input type="text" id="customThanaInput" placeholder="থানার নাম লিখুন">
+              </div>
+            </div>
+          </div>
+
+          <div class="field-block">
+            <label for="addressDetails" class="field-label">
+              গ্রাম / মহল্লা ও ডাকঘর <span class="req-star">*</span>
+            </label>
+            <input 
+              type="text" 
+              id="addressDetails" 
+              name="addressDetails" 
+              required 
+              placeholder="গ্রাম: ... , ডাকঘর: ..."
+            >
+          </div>
+        </div>
+
+        <!-- শিক্ষাগত যোগ্যতা ও ফারেগ তথ্য -->
+        <div class="academic-section">
+          <div class="section-title">শিক্ষাগত যোগ্যতা ও ফারেগ বিবরণ</div>
+
+          <div class="field-block">
+            <label for="dawrahMadrasa" class="field-label">
+              ফারেগ প্রতিষ্ঠান (যে মাদ্রাসা থেকে দাওরায়ে হাদীস পড়েছেন) <span class="req-star">*</span>
+            </label>
+            <input 
+              type="text" 
+              id="dawrahMadrasa" 
+              name="dawrahMadrasa" 
+              list="madrasaSuggestions"
+              required 
+              placeholder="মাদ্রাসার নাম লিখুন"
+            >
+            <datalist id="madrasaSuggestions">
+              <option value="আল-জামিয়াতুল আহলিয়া দারুল উলুম মুঈনুল ইসলাম হাটহাজারী, চট্টগ্রাম">
+              <option value="আল-জামিয়া আল-ইসলামিয়া পটিয়া, চট্টগ্রাম">
+              <option value="জামিয়া ইসলামিয়া দারুল উলুম মাদানিয়া যাত্রাবাড়ী, ঢাকা">
+              <option value="জামিয়া শারইয়্যাহ মালিবাগ, ঢাকা">
+              <option value="জামিয়া রাহমানিয়া আরাবিয়া মোহাম্মদপুর, ঢাকা">
+              <option value="জামিয়া মাদানিয়া বারিধারা, ঢাকা">
+              <option value="জামিয়া কুরআনিয়া আরাবিয়া লালবাগ, ঢাকা">
+              <option value="দারুল উলুম দেওবন্দ, ভারত">
+              <option value="মাজাহির উলুম সাহারানপুর, ভারত">
+            </datalist>
+          </div>
+
+          <div class="form-row">
+            <div class="field-block">
+              <label for="dawrahYear" class="field-label">
+                দাওরা পাশের সন <span class="req-star">*</span>
+              </label>
+              <div class="select-wrap">
+                <select id="dawrahYear" name="dawrahYear" required>
+                  <option value="" disabled selected>সন নির্বাচন করুন</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-block">
+              <label for="dawrahResult" class="field-label">
+                দাওরায়ে হাদীসের ফলাফল <span class="req-star">*</span>
+              </label>
+              <div class="select-wrap">
+                <select id="dawrahResult" name="dawrahResult" required>
+                  <option value="" disabled selected>ফলাফল নির্বাচন করুন</option>
+                  <option value="মুমতাজ (স্টার / ১ম বিভাগ)">মুমতাজ (স্টার / ১ম বিভাগ)</option>
+                  <option value="জায়্যিদ জিদ্দান (১ম বিভাগ)">জায়্যিদ জিদ্দান (১ম বিভাগ)</option>
+                  <option value="জায়্যিদ (২য় বিভাগ)">জায়্যিদ (২য় বিভাগ)</option>
+                  <option value="মকবুল (৩য় বিভাগ)">মকবুল (৩য় বিভাগ)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="field-block">
+            <label for="takhassusSelect" class="field-label">
+              তাখাসসুসাত (উচ্চতর বিশেষত্ব / অতিরিক্ত পড়াশোনা)
+            </label>
+            <div class="select-wrap">
+              <select id="takhassusSelect" name="takhassus">
+                <option value="প্রযোজ্য নয় / তাখাসসুস নেই">প্রযোজ্য নয় / তাখাসসুস নেই</option>
+                <option value="ইফতা (উচ্চতর ফিকহ ও ফতোয়া গবেষণা)">ইফতা (উচ্চতর ফিকহ ও ফতোয়া গবেষণা)</option>
+                <option value="উলুমুল হাদিস (উচ্চতর হাদিস শাস্ত্র)">উলুমুল হাদিস (উচ্চতর হাদিস শাস্ত্র)</option>
+                <option value="উলুমুল কুরআন ও তাফসির">উলুমুল কুরআন ও তাফসির</option>
+                <option value="আদব (উচ্চতর আরবি সাহিত্য)">আদব (উচ্চতর আরবি সাহিত্য)</option>
+                <option value="দাওয়াত ও ইরশাদ">দাওয়াত ও ইরশাদ</option>
+                <option value="তাজবীদ ও ক্বিরাআত">তাজবীদ ও ক্বিরাআত</option>
+                <option value="অন্যান্য">অন্যান্য বিষয়</option>
+              </select>
+            </div>
+            <div id="otherTakhassusBox" class="extra-input-box hidden">
+              <input type="text" id="otherTakhassusInput" placeholder="তাখাসসুসের বিষয় ও প্রতিষ্ঠানের নাম লিখুন">
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button: 'জমা দিন' -->
+        <div class="submit-wrap">
+          <button type="submit" class="submit-btn" id="submitBtn">
+            <span class="spinner hidden" id="submitSpinner"></span>
+            <span id="submitText">জমা দিন</span>
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </main>
+
+  <!-- Discreet Footer (no noise) -->
+  <footer class="clean-footer">
+    <button type="button" id="adminConfigBtn" class="discreet-link" title="সেটিংস">⚙️</button>
+  </footer>
+
+  <!-- ================= SUBMISSION SUCCESS MODAL ================= -->
+  <dialog id="successModal" class="receipt-dialog">
+    <div class="success-box">
+      
+      <!-- Animated Arabic Jazakallah Text -->
+      <div class="arabic-jazakallah-wrap">
+        <div class="arabic-jazakallah" lang="ar">
+          جَزَاكُمُ اللَّهُ خَيْرًا
+        </div>
+        <div class="arabic-divider">
+          <span>❖</span>
+        </div>
+      </div>
+
+      <h2 class="success-heading">আপনার ফরমটি সফলভাবে পূরণ হয়েছে</h2>
+
+      <!-- Notice: ফিঙ্গারপ্রিন্ট ও ছবি দেওয়ার সময় -->
+      <div class="notice-card">
+        <div class="notice-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+        </div>
+        <p class="notice-text">
+          ফিঙ্গারপ্রিন্ট এবং ছবি দেওয়ার সময়টি আপনাদেরকে জানিয়ে দেওয়া হবে।
+        </p>
+      </div>
+
+      <!-- Quick receipt summary -->
+      <div class="mini-summary">
+        <div class="summary-line">
+          <span class="s-label">নাম:</span>
+          <span class="s-val" id="rName">-</span>
+        </div>
+        <div class="summary-line">
+          <span class="s-label">মোবাইল:</span>
+          <span class="s-val" id="rPhone">-</span>
+        </div>
+      </div>
+
+      <div class="success-actions">
+        <button type="button" id="newEntryBtn" class="action-btn">ঠিক আছে</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Secret Settings Modal for Google Sheet URL -->
+  <dialog id="adminModal" class="receipt-dialog">
+    <div class="receipt-card" style="text-align: left;">
+      <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: #064e3b;">গুগল শিট কানেকশন ইউআরএল</h3>
+      <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1rem;">একাউন্ট: ashikpushpo07@gmail.com</p>
+      <input type="url" id="adminSheetUrlInput" placeholder="Google Apps Script Web App URL পেস্ট করুন" style="width: 100%; padding: 0.6rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.9rem; margin-bottom: 0.75rem;">
+      <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+        <button type="button" id="closeAdminBtn" style="padding: 0.5rem 1rem; border: 1px solid #cbd5e1; background: white; border-radius: 6px; cursor: pointer;">বাতিল</button>
+        <button type="button" id="saveAdminBtn" style="padding: 0.5rem 1.2rem; background: #047857; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">সংরক্ষণ</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Toast -->
+  <div id="toastContainer" class="toast-box"></div>
+
+  <!-- Bangladesh Location Data -->
+  <script src="bd-geo.js"></script>
+  <!-- Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
