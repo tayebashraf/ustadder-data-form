@@ -23,6 +23,13 @@ const thanaSelect = document.getElementById('thanaSelect');
 const customThanaBox = document.getElementById('customThanaBox');
 const customThanaInput = document.getElementById('customThanaInput');
 const addressDetailsInput = document.getElementById('addressDetails');
+
+// Education Stream Switcher & Blocks
+const eduTypeRadios = document.querySelectorAll('input[name="eduType"]');
+const madrasaBlock = document.getElementById('madrasaBlock');
+const generalBlock = document.getElementById('generalBlock');
+
+// Madrasa Fields
 const isHafizSelect = document.getElementById('isHafizSelect');
 const dawrahMadrasaInput = document.getElementById('dawrahMadrasa');
 const dawrahYearSelect = document.getElementById('dawrahYear');
@@ -30,6 +37,18 @@ const dawrahResultSelect = document.getElementById('dawrahResult');
 const takhassusSelect = document.getElementById('takhassusSelect');
 const otherTakhassusBox = document.getElementById('otherTakhassusBox');
 const otherTakhassusInput = document.getElementById('otherTakhassusInput');
+
+// General Education Fields (For Sirs / General Teachers)
+const generalDegreeSelect = document.getElementById('generalDegreeSelect');
+const otherDegreeBox = document.getElementById('otherDegreeBox');
+const otherDegreeInput = document.getElementById('otherDegreeInput');
+const generalSubjectInput = document.getElementById('generalSubject');
+const generalInstituteInput = document.getElementById('generalInstitute');
+const generalYearSelect = document.getElementById('generalYear');
+const generalResultSelect = document.getElementById('generalResult');
+const otherResultBox = document.getElementById('otherResultBox');
+const otherResultInput = document.getElementById('otherResultInput');
+const extraQualificationsInput = document.getElementById('extraQualifications');
 
 // Submit Buttons
 const submitBtn = document.getElementById('submitBtn');
@@ -40,6 +59,8 @@ const submitText = document.getElementById('submitText');
 const successModal = document.getElementById('successModal');
 const newEntryBtn = document.getElementById('newEntryBtn');
 const rName = document.getElementById('rName');
+const rEduType = document.getElementById('rEduType');
+const rDegreeInfo = document.getElementById('rDegreeInfo');
 const rHafiz = document.getElementById('rHafiz');
 const rFather = document.getElementById('rFather');
 const rPhone = document.getElementById('rPhone');
@@ -170,6 +191,52 @@ takhassusSelect.addEventListener('change', () => {
   }
 });
 
+// ==============================================================================
+// শিক্ষাগত মাধ্যমের সুইচিং ও সাধারণ শিক্ষার হ্যান্ডলিং
+// ==============================================================================
+
+function updateEduTypeView() {
+  const selected = document.querySelector('input[name="eduType"]:checked');
+  const val = selected ? selected.value : 'madrasa';
+
+  if (val === 'madrasa') {
+    madrasaBlock.classList.remove('hidden');
+    generalBlock.classList.add('hidden');
+  } else if (val === 'general') {
+    madrasaBlock.classList.add('hidden');
+    generalBlock.classList.remove('hidden');
+  } else if (val === 'both') {
+    madrasaBlock.classList.remove('hidden');
+    generalBlock.classList.remove('hidden');
+  }
+}
+
+eduTypeRadios.forEach(radio => {
+  radio.addEventListener('change', updateEduTypeView);
+});
+
+if (generalDegreeSelect) {
+  generalDegreeSelect.addEventListener('change', () => {
+    if (generalDegreeSelect.value === 'অন্যান্য') {
+      otherDegreeBox.classList.remove('hidden');
+      otherDegreeInput.focus();
+    } else {
+      otherDegreeBox.classList.add('hidden');
+    }
+  });
+}
+
+if (generalResultSelect) {
+  generalResultSelect.addEventListener('change', () => {
+    if (generalResultSelect.value === 'অন্যান্য') {
+      otherResultBox.classList.remove('hidden');
+      otherResultInput.focus();
+    } else {
+      otherResultBox.classList.add('hidden');
+    }
+  });
+}
+
 function populateDawrahYears() {
   dawrahYearSelect.innerHTML = '<option value="" disabled selected>সন নির্বাচন করুন</option>';
   const currentYear = new Date().getFullYear();
@@ -180,6 +247,19 @@ function populateDawrahYears() {
     opt.value = label;
     opt.textContent = label;
     dawrahYearSelect.appendChild(opt);
+  }
+}
+
+function populateGeneralYears() {
+  if (!generalYearSelect) return;
+  generalYearSelect.innerHTML = '<option value="" disabled selected>সন নির্বাচন করুন</option>';
+  const currentYear = new Date().getFullYear();
+  for (let y = currentYear; y >= 1980; y--) {
+    const opt = document.createElement('option');
+    const label = `${toBengaliDigits(y)} ঈসায়ী`;
+    opt.value = label;
+    opt.textContent = label;
+    generalYearSelect.appendChild(opt);
   }
 }
 
@@ -205,7 +285,7 @@ form.addEventListener('submit', async (e) => {
   e.preventDefault();
   if (isFormSubmitting) return;
 
-  // Explicit field validations with precise Bengali toasts
+  // ১. মৌলিক তথ্যের যাচাই (সকলের জন্য বাধ্যতামূলক)
   if (!fullNameInput.value.trim()) {
     fullNameInput.focus();
     showToast('অনুগ্রহ করে পূর্ণ নাম লিখুন', true);
@@ -226,7 +306,7 @@ form.addEventListener('submit', async (e) => {
 
   if (!joiningDateInput.value) {
     joiningDateInput.focus();
-    showToast('অনুগ্রহ করে মাদ্রাসায় নিয়োগের তারিখ নির্বাচন করুন', true);
+    showToast('অনুগ্রহ করে নিয়োগ / যোগদানের তারিখ নির্বাচন করুন', true);
     return;
   }
 
@@ -282,29 +362,106 @@ form.addEventListener('submit', async (e) => {
     return;
   }
 
-  if (!dawrahMadrasaInput.value.trim()) {
-    dawrahMadrasaInput.focus();
-    showToast('অনুগ্রহ করে ফারেগ মাদ্রাসার নাম লিখুন', true);
-    return;
+  // ২. শিক্ষাগত ব্যাকগ্রাউন্ড নির্ধারণ
+  const selectedEduTypeRadio = document.querySelector('input[name="eduType"]:checked');
+  const eduTypeValue = selectedEduTypeRadio ? selectedEduTypeRadio.value : 'madrasa';
+
+  let eduTypeLabel = 'কওমি মাদ্রাসা';
+  if (eduTypeValue === 'general') eduTypeLabel = 'সাধারণ শিক্ষা (স্যার)';
+  else if (eduTypeValue === 'both') eduTypeLabel = 'উভয় মাধ্যম (মাদ্রাসা ও সাধারণ)';
+
+  // ৩. কওমি মাদ্রাসা তথ্যের শর্তসাপেক্ষ ভ্যালিডেশন
+  let finalDawrahMadrasa = 'প্রযোজ্য নয়';
+  let finalDawrahYear = 'প্রযোজ্য নয়';
+  let finalDawrahResult = 'প্রযোজ্য নয়';
+  let finalTakhassus = 'প্রযোজ্য নয়';
+
+  if (eduTypeValue === 'madrasa' || eduTypeValue === 'both') {
+    if (!dawrahMadrasaInput.value.trim()) {
+      dawrahMadrasaInput.focus();
+      showToast('অনুগ্রহ করে ফারেগ মাদ্রাসার নাম লিখুন', true);
+      return;
+    }
+    if (!dawrahYearSelect.value) {
+      dawrahYearSelect.focus();
+      showToast('অনুগ্রহ করে দাওরা পাশের সন নির্বাচন করুন', true);
+      return;
+    }
+    if (!dawrahResultSelect.value) {
+      dawrahResultSelect.focus();
+      showToast('অনুগ্রহ করে দাওরায়ে হাদীসের ফলাফল নির্বাচন করুন', true);
+      return;
+    }
+
+    finalDawrahMadrasa = dawrahMadrasaInput.value.trim();
+    finalDawrahYear = dawrahYearSelect.value;
+    finalDawrahResult = dawrahResultSelect.value;
+    finalTakhassus = takhassusSelect.value;
+    if (finalTakhassus === 'অন্যান্য') {
+      finalTakhassus = otherTakhassusInput.value.trim() ? `অন্যান্য: ${otherTakhassusInput.value.trim()}` : 'অন্যান্য';
+    }
   }
 
-  if (!dawrahYearSelect.value) {
-    dawrahYearSelect.focus();
-    showToast('অনুগ্রহ করে দাওরা পাশের সন নির্বাচন করুন', true);
-    return;
+  // ৪. সাধারণ শিক্ষা তথ্যের শর্তসাপেক্ষ ভ্যালিডেশন (স্যারদের জন্য)
+  let finalGeneralDegree = 'প্রযোজ্য নয়';
+  let finalGeneralSubject = 'প্রযোজ্য নয়';
+  let finalGeneralInstitute = 'প্রযোজ্য নয়';
+  let finalGeneralYear = 'প্রযোজ্য নয়';
+  let finalGeneralResult = 'প্রযোজ্য নয়';
+  let finalExtraQualifications = 'প্রযোজ্য নয়';
+
+  if (eduTypeValue === 'general' || eduTypeValue === 'both') {
+    if (!generalDegreeSelect.value) {
+      generalDegreeSelect.focus();
+      showToast('অনুগ্রহ করে আপনার সর্বোচ্চ ডিগ্রি নির্বাচন করুন', true);
+      return;
+    }
+    if (generalDegreeSelect.value === 'অন্যান্য' && !otherDegreeInput.value.trim()) {
+      otherDegreeInput.focus();
+      showToast('অনুগ্রহ করে আপনার ডিগ্রির নাম লিখুন', true);
+      return;
+    }
+    if (!generalSubjectInput.value.trim()) {
+      generalSubjectInput.focus();
+      showToast('অনুগ্রহ করে পঠিত মূল বিষয় বা বিভাগ লিখুন', true);
+      return;
+    }
+    if (!generalInstituteInput.value.trim()) {
+      generalInstituteInput.focus();
+      showToast('অনুগ্রহ করে আপনার শিক্ষাপ্রতিষ্ঠান বা কলেজের নাম লিখুন', true);
+      return;
+    }
+    if (!generalYearSelect.value) {
+      generalYearSelect.focus();
+      showToast('অনুগ্রহ করে পাশের সন নির্বাচন করুন', true);
+      return;
+    }
+    if (!generalResultSelect.value) {
+      generalResultSelect.focus();
+      showToast('অনুগ্রহ করে আপনার ফলাফল বা সিজিপিএ নির্বাচন করুন', true);
+      return;
+    }
+    if (generalResultSelect.value === 'অন্যান্য' && !otherResultInput.value.trim()) {
+      otherResultInput.focus();
+      showToast('অনুগ্রহ করে ফলাফল বা গ্রেড লিখুন', true);
+      return;
+    }
+
+    finalGeneralDegree = generalDegreeSelect.value;
+    if (finalGeneralDegree === 'অন্যান্য') {
+      finalGeneralDegree = otherDegreeInput.value.trim() ? `অন্যান্য: ${otherDegreeInput.value.trim()}` : 'অন্যান্য';
+    }
+    finalGeneralSubject = generalSubjectInput.value.trim();
+    finalGeneralInstitute = generalInstituteInput.value.trim();
+    finalGeneralYear = generalYearSelect.value;
+    finalGeneralResult = generalResultSelect.value;
+    if (finalGeneralResult === 'অন্যান্য') {
+      finalGeneralResult = otherResultInput.value.trim() ? otherResultInput.value.trim() : 'অন্যান্য';
+    }
+    finalExtraQualifications = extraQualificationsInput.value.trim() || 'নেই / প্রযোজ্য নয়';
   }
 
-  if (!dawrahResultSelect.value) {
-    dawrahResultSelect.focus();
-    showToast('অনুগ্রহ করে দাওরায়ে হাদীসের ফলাফল নির্বাচন করুন', true);
-    return;
-  }
-
-  let finalTakhassus = takhassusSelect.value;
-  if (finalTakhassus === 'অন্যান্য') {
-    finalTakhassus = otherTakhassusInput.value.trim() ? `অন্যান্য: ${otherTakhassusInput.value.trim()}` : 'অন্যান্য';
-  }
-
+  // ৫. সম্পূর্ণ পেলোড তৈরি
   const payload = {
     submissionId: 'USTAD-' + Date.now().toString().slice(-6),
     fullName: fullNameInput.value.trim(),
@@ -316,11 +473,19 @@ form.addEventListener('submit', async (e) => {
     addressDetails: addressDetailsInput.value.trim(),
     birthDate: birthDateInput.value,
     joiningDate: joiningDateInput.value,
+    eduType: eduTypeLabel,
+    eduTypeValue: eduTypeValue,
     isHafiz: isHafizSelect.value,
-    dawrahMadrasa: dawrahMadrasaInput.value.trim(),
-    dawrahYear: dawrahYearSelect.value,
-    dawrahResult: dawrahResultSelect.value,
+    dawrahMadrasa: finalDawrahMadrasa,
+    dawrahYear: finalDawrahYear,
+    dawrahResult: finalDawrahResult,
     takhassus: finalTakhassus,
+    generalDegree: finalGeneralDegree,
+    generalSubject: finalGeneralSubject,
+    generalInstitute: finalGeneralInstitute,
+    generalYear: finalGeneralYear,
+    generalResult: finalGeneralResult,
+    extraQualifications: finalExtraQualifications,
     timestamp: new Date().toLocaleString('bn-BD', { timeZone: 'Asia/Dhaka' })
   };
 
@@ -372,6 +537,16 @@ form.addEventListener('submit', async (e) => {
 
   // Show Success Modal safely
   if (rName) rName.textContent = payload.fullName;
+  if (rEduType) rEduType.textContent = payload.eduType;
+  if (rDegreeInfo) {
+    if (eduTypeValue === 'general') {
+      rDegreeInfo.textContent = `${payload.generalDegree} (${payload.generalSubject})`;
+    } else if (eduTypeValue === 'both') {
+      rDegreeInfo.textContent = `দাওরা + ${payload.generalDegree}`;
+    } else {
+      rDegreeInfo.textContent = payload.isHafiz;
+    }
+  }
   if (rHafiz) rHafiz.textContent = payload.isHafiz;
   if (rFather) rFather.textContent = payload.fatherName;
   if (rPhone) rPhone.textContent = toBengaliDigits(payload.personalPhone);
@@ -387,6 +562,13 @@ form.addEventListener('submit', async (e) => {
   thanaSelect.disabled = true;
   customThanaBox.classList.add('hidden');
   otherTakhassusBox.classList.add('hidden');
+  if (otherDegreeBox) otherDegreeBox.classList.add('hidden');
+  if (otherResultBox) otherResultBox.classList.add('hidden');
+
+  // Reset switcher back to default
+  const defaultRadio = document.querySelector('input[name="eduType"][value="madrasa"]');
+  if (defaultRadio) defaultRadio.checked = true;
+  updateEduTypeView();
 });
 
 newEntryBtn.addEventListener('click', () => {
@@ -421,4 +603,6 @@ window.addEventListener('keydown', (e) => {
 window.addEventListener('DOMContentLoaded', () => {
   populateDistricts();
   populateDawrahYears();
+  populateGeneralYears();
+  updateEduTypeView();
 });

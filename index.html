@@ -18,10 +18,14 @@
   <main class="page-wrap">
     <div class="form-box">
       
-      <!-- Top Clean Header: শুধুমাত্র 'আপনার তথ্য দিন' -->
+      <!-- Top Clean Header: মার্জিত ও প্রিমিয়াম হেডার -->
       <header class="clean-header">
+        <div class="header-badge">
+          <span class="badge-dot"></span>
+          <span>শিক্ষক তথ্য সংগ্রহ ফরম</span>
+        </div>
         <h1 class="main-heading">আপনার তথ্য দিন</h1>
-        <p class="sub-heading">অনুগ্রহ করে নিচের তথ্যগুলো সঠিকভাবে পূরণ করে জমা দিন</p>
+        <p class="sub-heading">সম্মানিত শিক্ষকবৃন্দ, অনুগ্রহ করে নিচের তথ্যগুলো সঠিকভাবে পূরণ করে জমা দিন</p>
       </header>
 
       <!-- Main Form -->
@@ -67,11 +71,12 @@
               name="birthDate" 
               required
             >
+            <span class="help-text">জাতীয় পরিচয়পত্র অনুযায়ী জন্ম তারিখ</span>
           </div>
 
           <div class="field-block">
             <label for="joiningDate" class="field-label">
-              মাদ্রাসায় নিয়োগের তারিখ <span class="req-star">*</span>
+              নিয়োগ / যোগদানের তারিখ <span class="req-star">*</span>
             </label>
             <input 
               type="date" 
@@ -79,6 +84,7 @@
               name="joiningDate" 
               required
             >
+            <span class="help-text">প্রতিষ্ঠানে বা মাদ্রাসায় যোগদানের তারিখ</span>
           </div>
         </div>
 
@@ -117,7 +123,10 @@
 
         <!-- স্থায়ী ঠিকানা -->
         <div class="address-section">
-          <div class="section-title">স্থায়ী ঠিকানা</div>
+          <div class="section-title">
+            <span class="section-icon">📍</span>
+            <span>স্থায়ী ঠিকানা</span>
+          </div>
 
           <div class="form-row">
             <div class="field-block">
@@ -161,10 +170,44 @@
           </div>
         </div>
 
-        <!-- শিক্ষাগত যোগ্যতা ও ফারেগ তথ্য -->
+        <!-- শিক্ষাগত যোগ্যতা ও ডিগ্রি তথ্য -->
         <div class="academic-section">
-          <div class="section-title">শিক্ষাগত যোগ্যতা ও ফারেগ বিবরণ</div>
+          <div class="section-title">
+            <span class="section-icon">🎓</span>
+            <span>শিক্ষাগত যোগ্যতার বিবরণ (মাদ্রাসা ও সাধারণ শিক্ষা)</span>
+          </div>
 
+          <!-- শিক্ষার ধরন / মাধ্যম নির্বাচন -->
+          <div class="field-block">
+            <label class="field-label">
+              শিক্ষাগত যোগ্যতার মাধ্যম / ধরন <span class="req-star">*</span>
+            </label>
+            <div class="education-switcher" role="radiogroup" aria-label="শিক্ষাগত মাধ্যম">
+              <label class="switcher-opt">
+                <input type="radio" name="eduType" value="madrasa" checked>
+                <span class="switcher-pill">
+                  <span class="pill-icon">🕌</span>
+                  <span class="pill-text">কওমি মাদ্রাসা</span>
+                </span>
+              </label>
+              <label class="switcher-opt">
+                <input type="radio" name="eduType" value="general">
+                <span class="switcher-pill">
+                  <span class="pill-icon">🎓</span>
+                  <span class="pill-text">সাধারণ শিক্ষা (স্যার)</span>
+                </span>
+              </label>
+              <label class="switcher-opt">
+                <input type="radio" name="eduType" value="both">
+                <span class="switcher-pill">
+                  <span class="pill-icon">📚</span>
+                  <span class="pill-text">উভয় মাধ্যম</span>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <!-- হিফযুল কুরআন (সকল শিক্ষকের জন্য প্রযোজ্য) -->
           <div class="field-block">
             <label for="isHafizSelect" class="field-label">
               হিফযুল কুরআন (আপনি কি হাফেজে কুরআন?) <span class="req-star">*</span>
@@ -178,76 +221,186 @@
             </div>
           </div>
 
-          <div class="field-block">
-            <label for="dawrahMadrasa" class="field-label">
-              ফারেগ প্রতিষ্ঠান (যে মাদ্রাসা থেকে দাওরায়ে হাদীস পড়েছেন) <span class="req-star">*</span>
-            </label>
-            <input 
-              type="text" 
-              id="dawrahMadrasa" 
-              name="dawrahMadrasa" 
-              list="madrasaSuggestions"
-              required 
-              placeholder="মাদ্রাসার নাম লিখুন"
-            >
-            <datalist id="madrasaSuggestions">
-              <option value="বাইতুল উলুম ঢালকানগর মাদ্রাসা, ঢাকা">
-              <option value="জামিয়া হাকীমুল উম্মত কেরানীগঞ্জ, ঢাকা">
-              <option value="মাদ্রাসা মারকাযুল ইহসান">
-              <option value="জামিয়া ইসলামিয়া দারুল উলুম মাদানিয়া যাত্রাবাড়ী, ঢাকা">
-              <option value="জামিয়া শারইয়্যাহ মালিবাগ, ঢাকা">
-              <option value="জামিয়া কুরআনিয়া আরাবিয়া লালবাগ, ঢাকা">
-              <option value="জামিয়া রাহমানিয়া আরাবিয়া মোহাম্মদপুর, ঢাকা">
-              <option value="জামিয়া মাদানিয়া বারিধারা, ঢাকা">
-            </datalist>
-          </div>
+          <!-- কওমি মাদ্রাসা তথ্য ব্লক -->
+          <div id="madrasaBlock" class="edu-sub-block">
+            <div class="sub-block-title">কওমি মাদ্রাসা শিক্ষার বিবরণ</div>
 
-          <div class="form-row">
             <div class="field-block">
-              <label for="dawrahYear" class="field-label">
-                দাওরা পাশের সন <span class="req-star">*</span>
+              <label for="dawrahMadrasa" class="field-label">
+                ফারেগ প্রতিষ্ঠান (যে মাদ্রাসা থেকে দাওরায়ে হাদীস পড়েছেন) <span class="req-star madrasa-req">*</span>
               </label>
-              <div class="select-wrap">
-                <select id="dawrahYear" name="dawrahYear" required>
-                  <option value="" disabled selected>সন নির্বাচন করুন</option>
-                </select>
+              <input 
+                type="text" 
+                id="dawrahMadrasa" 
+                name="dawrahMadrasa" 
+                list="madrasaSuggestions"
+                placeholder="মাদ্রাসার নাম লিখুন"
+              >
+              <datalist id="madrasaSuggestions">
+                <option value="বাইতুল উলুম ঢালকানগর মাদ্রাসা, ঢাকা">
+                <option value="জামিয়া হাকীমুল উম্মত কেরানীগঞ্জ, ঢাকা">
+                <option value="মাদ্রাসা মারকাযুল ইহসান">
+                <option value="জামিয়া ইসলামিয়া দারুল উলুম মাদানিয়া যাত্রাবাড়ী, ঢাকা">
+                <option value="জামিয়া শারইয়্যাহ মালিবাগ, ঢাকা">
+                <option value="জামিয়া কুরআনিয়া আরাবিয়া লালবাগ, ঢাকা">
+                <option value="জামিয়া রাহমানিয়া আরাবিয়া মোহাম্মদপুর, ঢাকা">
+                <option value="জামিয়া মাদানিয়া বারিধারা, ঢাকা">
+              </datalist>
+            </div>
+
+            <div class="form-row">
+              <div class="field-block">
+                <label for="dawrahYear" class="field-label">
+                  দাওরা পাশের সন <span class="req-star madrasa-req">*</span>
+                </label>
+                <div class="select-wrap">
+                  <select id="dawrahYear" name="dawrahYear">
+                    <option value="" disabled selected>সন নির্বাচন করুন</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-block">
+                <label for="dawrahResult" class="field-label">
+                  দাওরায়ে হাদীসের ফলাফল <span class="req-star madrasa-req">*</span>
+                </label>
+                <div class="select-wrap">
+                  <select id="dawrahResult" name="dawrahResult">
+                    <option value="" disabled selected>ফলাফল নির্বাচন করুন</option>
+                    <option value="মুমতাজ (স্টার / ১ম বিভাগ)">মুমতাজ (স্টার / ১ম বিভাগ)</option>
+                    <option value="জায়্যিদ জিদ্দান (১ম বিভাগ)">জায়্যিদ জিদ্দান (১ম বিভাগ)</option>
+                    <option value="জায়্যিদ (২য় বিভাগ)">জায়্যিদ (২য় বিভাগ)</option>
+                    <option value="মকবুল (৩য় বিভাগ)">মকবুল (৩য় বিভাগ)</option>
+                  </select>
+                </div>
               </div>
             </div>
 
             <div class="field-block">
-              <label for="dawrahResult" class="field-label">
-                দাওরায়ে হাদীসের ফলাফল <span class="req-star">*</span>
+              <label for="takhassusSelect" class="field-label">
+                তাখাসসুসাত (উচ্চতর বিশেষত্ব / অতিরিক্ত পড়াশোনা)
               </label>
               <div class="select-wrap">
-                <select id="dawrahResult" name="dawrahResult" required>
-                  <option value="" disabled selected>ফলাফল নির্বাচন করুন</option>
-                  <option value="মুমতাজ (স্টার / ১ম বিভাগ)">মুমতাজ (স্টার / ১ম বিভাগ)</option>
-                  <option value="জায়্যিদ জিদ্দান (১ম বিভাগ)">জায়্যিদ জিদ্দান (১ম বিভাগ)</option>
-                  <option value="জায়্যিদ (২য় বিভাগ)">জায়্যিদ (২য় বিভাগ)</option>
-                  <option value="মকবুল (৩য় বিভাগ)">মকবুল (৩য় বিভাগ)</option>
+                <select id="takhassusSelect" name="takhassus">
+                  <option value="প্রযোজ্য নয় / তাখাসসুস নেই">প্রযোজ্য নয় / তাখাসসুস নেই</option>
+                  <option value="ইফতা (উচ্চতর ফিকহ ও ফতোয়া গবেষণা)">ইফতা (উচ্চতর ফিকহ ও ফতোয়া গবেষণা)</option>
+                  <option value="উলুমুল হাদিস (উচ্চতর হাদিস শাস্ত্র)">উলুমুল হাদিস (উচ্চতর হাদিস শাস্ত্র)</option>
+                  <option value="উলুমুল কুরআন ও তাফসির">উলুমুল কুরআন ও তাফসির</option>
+                  <option value="আদব (উচ্চতর আরবি সাহিত্য)">আদব (উচ্চতর আরবি সাহিত্য)</option>
+                  <option value="দাওয়াত ও ইরশাদ">দাওয়াত ও ইরশাদ</option>
+                  <option value="তাজবীদ ও ক্বিরাআত">তাজবীদ ও ক্বিরাআত</option>
+                  <option value="অন্যান্য">অন্যান্য বিষয়</option>
                 </select>
+              </div>
+              <div id="otherTakhassusBox" class="extra-input-box hidden">
+                <input type="text" id="otherTakhassusInput" placeholder="তাখাসসুসের বিষয় ও প্রতিষ্ঠানের নাম লিখুন">
               </div>
             </div>
           </div>
 
-          <div class="field-block">
-            <label for="takhassusSelect" class="field-label">
-              তাখাসসুসাত (উচ্চতর বিশেষত্ব / অতিরিক্ত পড়াশোনা)
-            </label>
-            <div class="select-wrap">
-              <select id="takhassusSelect" name="takhassus">
-                <option value="প্রযোজ্য নয় / তাখাসসুস নেই">প্রযোজ্য নয় / তাখাসসুস নেই</option>
-                <option value="ইফতা (উচ্চতর ফিকহ ও ফতোয়া গবেষণা)">ইফতা (উচ্চতর ফিকহ ও ফতোয়া গবেষণা)</option>
-                <option value="উলুমুল হাদিস (উচ্চতর হাদিস শাস্ত্র)">উলুমুল হাদিস (উচ্চতর হাদিস শাস্ত্র)</option>
-                <option value="উলুমুল কুরআন ও তাফসির">উলুমুল কুরআন ও তাফসির</option>
-                <option value="আদব (উচ্চতর আরবি সাহিত্য)">আদব (উচ্চতর আরবি সাহিত্য)</option>
-                <option value="দাওয়াত ও ইরশাদ">দাওয়াত ও ইরশাদ</option>
-                <option value="তাজবীদ ও ক্বিরাআত">তাজবীদ ও ক্বিরাআত</option>
-                <option value="অন্যান্য">অন্যান্য বিষয়</option>
-              </select>
+          <!-- সাধারণ শিক্ষা (স্কুল/কলেজ ব্যাকগ্রাউন্ড - স্যারদের) তথ্য ব্লক -->
+          <div id="generalBlock" class="edu-sub-block hidden">
+            <div class="sub-block-title">সাধারণ শিক্ষার বিবরণ (স্কুল / কলেজ / বিশ্ববিদ্যালয়)</div>
+
+            <div class="form-row">
+              <div class="field-block">
+                <label for="generalDegreeSelect" class="field-label">
+                  সর্বোচ্চ ডিগ্রি / শিক্ষাগত যোগ্যতা <span class="req-star general-req">*</span>
+                </label>
+                <div class="select-wrap">
+                  <select id="generalDegreeSelect" name="generalDegree">
+                    <option value="" disabled selected>ডিগ্রি নির্বাচন করুন</option>
+                    <option value="স্নাতকোত্তর / মাস্টার্স (M.A / M.Sc / M.Com / MBA ইত্যাদি)">স্নাতকোত্তর / মাস্টার্স (M.A / M.Sc / M.Com / MBA ইত্যাদি)</option>
+                    <option value="স্নাতক (সম্মান) / অনার্স (B.A / B.Sc / B.Com / BBA ইত্যাদি)">স্নাতক (সম্মান) / অনার্স (B.A / B.Sc / B.Com / BBA ইত্যাদি)</option>
+                    <option value="স্নাতক (পাস) / ডিগ্রি">স্নাতক (পাস) / ডিগ্রি</option>
+                    <option value="উচ্চ মাধ্যমিক / এইচএসসি / আলিম">উচ্চ মাধ্যমিক / এইচএসসি / আলিম</option>
+                    <option value="মাধ্যমিক / এসএসসি / দাখিল">মাধ্যমিক / এসএসসি / দাখিল</option>
+                    <option value="ডিপ্লোমা / সমমান">ডিপ্লোমা / সমমান</option>
+                    <option value="অন্যান্য">অন্যান্য</option>
+                  </select>
+                </div>
+                <div id="otherDegreeBox" class="extra-input-box hidden">
+                  <input type="text" id="otherDegreeInput" placeholder="আপনার ডিগ্রির নাম লিখুন">
+                </div>
+              </div>
+
+              <div class="field-block">
+                <label for="generalSubject" class="field-label">
+                  পঠিত প্রধান বিষয় / বিভাগ <span class="req-star general-req">*</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="generalSubject" 
+                  name="generalSubject" 
+                  list="subjectSuggestions"
+                  placeholder="যেমন: ইংরেজি, গণিত, বাংলা, বিজ্ঞান"
+                >
+                <datalist id="subjectSuggestions">
+                  <option value="ইংরেজি">
+                  <option value="গণিত">
+                  <option value="বাংলা">
+                  <option value="বিজ্ঞান / পদার্থ / রসায়ন">
+                  <option value="হিসাববিজ্ঞান / ব্যবসায় শিক্ষা">
+                  <option value="ইতিহাস / সমাজবিজ্ঞান">
+                  <option value="ইসলামের ইতিহাস / আরবি">
+                  <option value="কম্পিউটার বিজ্ঞান / আইসিটি">
+                </datalist>
+              </div>
             </div>
-            <div id="otherTakhassusBox" class="extra-input-box hidden">
-              <input type="text" id="otherTakhassusInput" placeholder="তাখাসসুসের বিষয় ও প্রতিষ্ঠানের নাম লিখুন">
+
+            <div class="field-block">
+              <label for="generalInstitute" class="field-label">
+                শিক্ষা প্রতিষ্ঠান (সর্বশেষ কলেজ / বিশ্ববিদ্যালয় / প্রতিষ্ঠান) <span class="req-star general-req">*</span>
+              </label>
+              <input 
+                type="text" 
+                id="generalInstitute" 
+                name="generalInstitute" 
+                placeholder="কলেজ বা বিশ্ববিদ্যালয়ের নাম লিখুন"
+              >
+            </div>
+
+            <div class="form-row">
+              <div class="field-block">
+                <label for="generalYear" class="field-label">
+                  পাশের সন <span class="req-star general-req">*</span>
+                </label>
+                <div class="select-wrap">
+                  <select id="generalYear" name="generalYear">
+                    <option value="" disabled selected>সন নির্বাচন করুন</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-block">
+                <label for="generalResult" class="field-label">
+                  ফলাফল / বিভাগ / সিজিপিএ <span class="req-star general-req">*</span>
+                </label>
+                <div class="select-wrap">
+                  <select id="generalResult" name="generalResult">
+                    <option value="" disabled selected>ফলাফল নির্বাচন করুন</option>
+                    <option value="১ম বিভাগ / শ্রেণি / GPA 5.00 বা CGPA 3.50+">১ম বিভাগ / শ্রেণি / GPA 5.00 বা CGPA 3.50+</option>
+                    <option value="২য় বিভাগ / শ্রেণি / GPA 4.00 বা CGPA 3.00+">২য় বিভাগ / শ্রেণি / GPA 4.00 বা CGPA 3.00+</option>
+                    <option value="৩য় বিভাগ / শ্রেণি / পাস">৩য় বিভাগ / শ্রেণি / পাস</option>
+                    <option value="অন্যান্য">অন্যান্য (নির্দিষ্ট গ্রেড)</option>
+                  </select>
+                </div>
+                <div id="otherResultBox" class="extra-input-box hidden">
+                  <input type="text" id="otherResultInput" placeholder="ফলাফল বা সিজিপিএ লিখুন (যেমন: CGPA 3.42)">
+                </div>
+              </div>
+            </div>
+
+            <div class="field-block">
+              <label for="extraQualifications" class="field-label">
+                পেশাগত প্রশিক্ষণ / অন্যান্য অতিরিক্ত যোগ্যতা (ঐচ্ছিক)
+              </label>
+              <input 
+                type="text" 
+                id="extraQualifications" 
+                name="extraQualifications" 
+                placeholder="যেমন: বিএড (B.Ed), কম্পিউটার প্রশিক্ষণ, বিষয়ভিত্তিক ট্রেনিং ইত্যাদি"
+              >
             </div>
           </div>
         </div>
@@ -306,8 +459,12 @@
           <span class="s-val" id="rName">-</span>
         </div>
         <div class="summary-line">
-          <span class="s-label">হাফেজ:</span>
-          <span class="s-val" id="rHafiz">-</span>
+          <span class="s-label">শিক্ষার মাধ্যম:</span>
+          <span class="s-val" id="rEduType">-</span>
+        </div>
+        <div class="summary-line">
+          <span class="s-label">হিফয / সাধারণ ডিগ্রি:</span>
+          <span class="s-val" id="rDegreeInfo">-</span>
         </div>
         <div class="summary-line">
           <span class="s-label">মোবাইল:</span>
@@ -340,6 +497,6 @@
   <!-- Bangladesh Location Data -->
   <script src="bd-geo.js"></script>
   <!-- Application Logic -->
-  <script src="app.js?v=2.3"></script>
+  <script src="app.js?v=2.4"></script>
 </body>
 </html>
