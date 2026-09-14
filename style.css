@@ -247,8 +247,8 @@ select:disabled {
 /* Education Stream Switcher (Segmented Tab Bar) */
 .education-switcher {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 3px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;
   background: #f1f5f9;
   padding: 3px;
   border-radius: 9px;
@@ -571,14 +571,14 @@ select:disabled {
   }
   
   .education-switcher {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 3px;
   }
   
   .switcher-pill {
-    padding: 0.55rem 0.65rem;
+    padding: 0.6rem 0.35rem;
     font-size: 0.88rem;
-    justify-content: flex-start;
+    justify-content: center;
   }
   
   .success-box {

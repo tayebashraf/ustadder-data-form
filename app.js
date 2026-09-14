@@ -199,15 +199,12 @@ function updateEduTypeView() {
   const selected = document.querySelector('input[name="eduType"]:checked');
   const val = selected ? selected.value : 'madrasa';
 
-  if (val === 'madrasa') {
-    madrasaBlock.classList.remove('hidden');
-    generalBlock.classList.add('hidden');
-  } else if (val === 'general') {
+  if (val === 'general') {
     madrasaBlock.classList.add('hidden');
     generalBlock.classList.remove('hidden');
-  } else if (val === 'both') {
+  } else {
     madrasaBlock.classList.remove('hidden');
-    generalBlock.classList.remove('hidden');
+    generalBlock.classList.add('hidden');
   }
 }
 
@@ -362,13 +359,10 @@ form.addEventListener('submit', async (e) => {
     return;
   }
 
-  // ২. শিক্ষাগত ব্যাকগ্রাউন্ড নির্ধারণ
+  // ২. শিক্ষাগত ব্যাকগ্রাউন্ড নির্ধারণ (কওমি মাদ্রাসা অথবা সাধারণ শিক্ষা)
   const selectedEduTypeRadio = document.querySelector('input[name="eduType"]:checked');
   const eduTypeValue = selectedEduTypeRadio ? selectedEduTypeRadio.value : 'madrasa';
-
-  let eduTypeLabel = 'কওমি মাদ্রাসা';
-  if (eduTypeValue === 'general') eduTypeLabel = 'সাধারণ শিক্ষা (স্যার)';
-  else if (eduTypeValue === 'both') eduTypeLabel = 'উভয় মাধ্যম (মাদ্রাসা ও সাধারণ)';
+  const eduTypeLabel = eduTypeValue === 'general' ? 'সাধারণ শিক্ষা (স্যার)' : 'কওমি মাদ্রাসা';
 
   // ৩. কওমি মাদ্রাসা তথ্যের শর্তসাপেক্ষ ভ্যালিডেশন
   let finalDawrahMadrasa = 'প্রযোজ্য নয়';
@@ -376,7 +370,7 @@ form.addEventListener('submit', async (e) => {
   let finalDawrahResult = 'প্রযোজ্য নয়';
   let finalTakhassus = 'প্রযোজ্য নয়';
 
-  if (eduTypeValue === 'madrasa' || eduTypeValue === 'both') {
+  if (eduTypeValue === 'madrasa') {
     if (!dawrahMadrasaInput.value.trim()) {
       dawrahMadrasaInput.focus();
       showToast('অনুগ্রহ করে ফারেগ মাদ্রাসার নাম লিখুন', true);
@@ -410,7 +404,7 @@ form.addEventListener('submit', async (e) => {
   let finalGeneralResult = 'প্রযোজ্য নয়';
   let finalExtraQualifications = 'প্রযোজ্য নয়';
 
-  if (eduTypeValue === 'general' || eduTypeValue === 'both') {
+  if (eduTypeValue === 'general') {
     if (!generalDegreeSelect.value) {
       generalDegreeSelect.focus();
       showToast('অনুগ্রহ করে আপনার সর্বোচ্চ ডিগ্রি নির্বাচন করুন', true);
@@ -538,22 +532,13 @@ form.addEventListener('submit', async (e) => {
   // Show Success Modal safely
   if (rName) rName.textContent = payload.fullName;
   if (rEduType) {
-    if (eduTypeValue === 'general') {
-      rEduType.textContent = 'সাধারণ শিক্ষা (স্কুল/কলেজ)';
-    } else if (eduTypeValue === 'both') {
-      rEduType.textContent = 'উভয় মাধ্যম (মাদ্রাসা ও সাধারণ)';
-    } else {
-      rEduType.textContent = 'কওমি মাদ্রাসা';
-    }
+    rEduType.textContent = eduTypeValue === 'general' ? 'সাধারণ শিক্ষা (স্যার)' : 'কওমি মাদ্রাসা';
   }
   if (rDegreeInfo) {
     if (eduTypeValue === 'general') {
       const deg = payload.generalDegree ? payload.generalDegree.split('(')[0].trim() : 'স্নাতক';
       const subj = payload.generalSubject ? ` - ${payload.generalSubject}` : '';
       rDegreeInfo.textContent = `${deg}${subj}`;
-    } else if (eduTypeValue === 'both') {
-      const deg = payload.generalDegree ? payload.generalDegree.split('(')[0].trim() : 'জেনারেল ডিগ্রি';
-      rDegreeInfo.textContent = `দাওরায়ে হাদীস + ${deg}`;
     } else {
       let deg = 'দাওরায়ে হাদীস';
       if (payload.dawrahYear) deg += ` (${toBengaliDigits(payload.dawrahYear)})`;

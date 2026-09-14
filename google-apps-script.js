@@ -166,10 +166,8 @@ function handleRequest(e) {
     var eduType = (data.eduType || "").toString();
     var eduTypeValue = (data.eduTypeValue || "").toString().toLowerCase();
 
-    // শিক্ষাগত ধরন শনাক্তকরণ
+    // শিক্ষাগত ধরন শনাক্তকরণ (কওমি মাদ্রাসা অথবা সাধারণ শিক্ষক - একক ও নির্দিষ্ট)
     var isGeneral = (eduTypeValue === "general" || eduType.indexOf("সাধারণ") !== -1 || eduType.indexOf("স্যার") !== -1);
-    var isBoth = (eduTypeValue === "both" || eduType.indexOf("উভয়") !== -1);
-    var isMadrasa = (!isGeneral && !isBoth) || (eduTypeValue === "madrasa" || eduType.indexOf("কওমি") !== -1);
 
     // ডুপ্লিকেট এন্ট্রি প্রতিরোধ হেল্পার
     function checkDuplicate(targetSheet) {
@@ -211,8 +209,8 @@ function handleRequest(e) {
 
     var savedInfo = [];
 
-    // ১. সাধারণ শিক্ষক (স্যার) হলে শুধুমাত্র "সাধারণ শিক্ষক (স্যারগণ)" ট্যাবে সেভ হবে
-    if (isGeneral || isBoth) {
+    // ১. সাধারণ শিক্ষক (স্যার) হলে শুধুমাত্র "সাধারণ শিক্ষক (স্যারগণ)" ট্যাবে সংরক্ষিত হবে
+    if (isGeneral) {
       if (!checkDuplicate(sirSheet)) {
         var sirFieldMap = {
           "টাইমস্ট্যাম্প": timestamp,
@@ -246,16 +244,11 @@ function handleRequest(e) {
       } else {
         savedInfo.push("সাধারণ শিক্ষক ট্যাবে ইতিমধ্যে সংরক্ষিত ছিল");
       }
-    }
-
-    // ২. কওমি মাদ্রাসার ওস্তাদ হলে শুধুমাত্র "মাদ্রাসার ওস্তাদগণ" ট্যাবে সেভ হবে
-    if (isMadrasa || isBoth) {
+    } 
+    // ২. অন্যথায় কওমি মাদ্রাসার ওস্তাদ হলে শুধুমাত্র "মাদ্রাসার ওস্তাদগণ" ট্যাবে সংরক্ষিত হবে
+    else {
       if (!checkDuplicate(ustadSheet)) {
         var takhassusVal = data.takhassus || "";
-        if (isBoth && data.generalDegree && data.generalDegree !== "প্রযোজ্য নয়") {
-          takhassusVal = (takhassusVal ? takhassusVal + " | " : "") + "জেনারেল: " + data.generalDegree + " (" + (data.generalSubject || "") + ")";
-        }
-
         var ustadFieldMap = {
           "টাইমস্ট্যাম্প": timestamp,
           "পূর্ণ নাম": fullName,
