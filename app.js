@@ -537,14 +537,28 @@ form.addEventListener('submit', async (e) => {
 
   // Show Success Modal safely
   if (rName) rName.textContent = payload.fullName;
-  if (rEduType) rEduType.textContent = payload.eduType;
+  if (rEduType) {
+    if (eduTypeValue === 'general') {
+      rEduType.textContent = 'সাধারণ শিক্ষা (স্কুল/কলেজ)';
+    } else if (eduTypeValue === 'both') {
+      rEduType.textContent = 'উভয় মাধ্যম (মাদ্রাসা ও সাধারণ)';
+    } else {
+      rEduType.textContent = 'কওমি মাদ্রাসা';
+    }
+  }
   if (rDegreeInfo) {
     if (eduTypeValue === 'general') {
-      rDegreeInfo.textContent = `${payload.generalDegree} (${payload.generalSubject})`;
+      const deg = payload.generalDegree ? payload.generalDegree.split('(')[0].trim() : 'স্নাতক';
+      const subj = payload.generalSubject ? ` - ${payload.generalSubject}` : '';
+      rDegreeInfo.textContent = `${deg}${subj}`;
     } else if (eduTypeValue === 'both') {
-      rDegreeInfo.textContent = `দাওরা + ${payload.generalDegree}`;
+      const deg = payload.generalDegree ? payload.generalDegree.split('(')[0].trim() : 'জেনারেল ডিগ্রি';
+      rDegreeInfo.textContent = `দাওরায়ে হাদীস + ${deg}`;
     } else {
-      rDegreeInfo.textContent = payload.isHafiz;
+      let deg = 'দাওরায়ে হাদীস';
+      if (payload.dawrahYear) deg += ` (${toBengaliDigits(payload.dawrahYear)})`;
+      if (payload.isHafiz && payload.isHafiz.includes('হ্যাঁ')) deg = `হাফেজে কুরআন, ${deg}`;
+      rDegreeInfo.textContent = deg;
     }
   }
   if (rHafiz) rHafiz.textContent = payload.isHafiz;

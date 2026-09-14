@@ -1,5 +1,5 @@
 /* ==========================================================================
-   কালপুরুষ ফন্ট এবং আধুনিক গ্লাসমরফিজম (Glassmorphism) মোবাইল-বান্ধব ফর্ম
+   মাদ্রাসার শিক্ষক তথ্য সংগ্রহ পোর্টাল - ক্লিন ও প্রফেশনাল স্টাইল
    ========================================================================== */
 
 @font-face {
@@ -15,7 +15,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Kalpurush', 'SolaimanLipi', -apple-system, sans-serif !important;
+  font-family: 'Kalpurush', 'SolaimanLipi', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
 }
 
 :root {
@@ -23,173 +23,119 @@
   --primary-hover: #047857;
   --primary-dark: #064e3b;
   --primary-light: #ecfdf5;
-  --primary-ring: rgba(5, 150, 105, 0.18);
-  --accent-gold: #d97706;
-
-  --card-bg: #ffffff;
-  --card-border: #e2e8f0;
-  --card-shadow: 0 20px 45px -12px rgba(15, 23, 42, 0.08), 0 4px 16px -2px rgba(0, 0, 0, 0.03);
-  --section-bg: #f8fafc;
-  --section-border: #e2e8f0;
-
-  --input-bg: #ffffff;
-  --input-border: #cbd5e1;
-  --input-focus: #059669;
-
+  --primary-ring: rgba(5, 150, 105, 0.15);
+  
   --text-main: #0f172a;
-  --text-sub: #475569;
+  --text-sub: #334155;
   --text-muted: #64748b;
+  --border-color: #cbd5e1;
+  --border-light: #f1f5f9;
+  
+  --bg-body: #f8fafc;
+  --bg-card: #ffffff;
   --error: #ef4444;
-  --radius: 16px;
 }
 
 body {
-  background: radial-gradient(circle at 10% 10%, #d1fae5 0%, #f0fdf4 35%, #f8fafc 80%);
-  background-attachment: fixed;
+  background-color: var(--bg-body);
   color: var(--text-main);
-  line-height: 1.5;
-  font-size: 16px;
+  line-height: 1.55;
+  font-size: 15px;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
-  position: relative;
-  overflow-x: hidden;
-}
-
-/* Ambient Background Lights */
-body::before {
-  content: "";
-  position: fixed;
-  top: -100px;
-  right: -100px;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.2), transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 0;
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  bottom: -80px;
-  left: -80px;
-  width: 350px;
-  height: 350px;
-  background: radial-gradient(circle, rgba(217, 119, 6, 0.12), transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 0;
 }
 
 /* Page Wrap */
 .page-wrap {
-  position: relative;
-  z-index: 1;
-  max-width: 660px;
-  margin: 1.75rem auto 3.5rem auto;
+  max-width: 620px;
+  margin: 2rem auto 3.5rem auto;
   padding: 0 1rem;
 }
 
-/* Premium Card Container */
+/* Clean Form Card */
 .form-box {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius);
-  box-shadow: var(--card-shadow);
-  padding: 2.25rem 2rem;
-  transition: box-shadow 0.3s ease;
+  background: var(--bg-card);
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+  padding: 2.5rem 2rem;
 }
 
-/* Clean & Dignified Header */
+/* Dignified Institutional Header */
 .clean-header {
   text-align: center;
-  padding-bottom: 1.35rem;
-  margin-bottom: 1.65rem;
-  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.75rem;
+  border-bottom: 1px solid var(--border-light);
 }
 
 .header-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  background: #ecfdf5;
-  color: #047857;
-  padding: 0.3rem 0.95rem;
+  background: #f0fdf4;
+  color: #065f46;
+  padding: 0.25rem 0.85rem;
   border-radius: 9999px;
-  font-size: 0.88rem;
-  font-weight: 700;
-  margin-bottom: 0.75rem;
-  border: 1px solid rgba(5, 150, 105, 0.2);
-  box-shadow: 0 2px 6px rgba(5, 150, 105, 0.06);
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-bottom: 0.65rem;
+  border: 1px solid #bbf7d0;
 }
 
 .badge-dot {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   background: #10b981;
   border-radius: 50%;
-  box-shadow: 0 0 8px #10b981;
-  animation: pulseDot 2s infinite ease-in-out;
-}
-
-@keyframes pulseDot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.85); }
 }
 
 .main-heading {
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: 700;
   color: var(--primary-dark);
   margin-bottom: 0.35rem;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.01em;
 }
 
 .sub-heading {
-  font-size: 0.96rem;
+  font-size: 0.92rem;
   color: var(--text-muted);
+  line-height: 1.45;
 }
 
-/* Cards for Address & Academic Sections */
+/* Seamless Semantic Sections (কোনো অতিরিক্ত বাক্স বা শেপ নেই) */
 .address-section,
 .academic-section {
-  background: var(--section-bg);
-  border: 1.5px solid var(--section-border);
-  border-radius: 14px;
-  padding: 1.4rem 1.3rem 0.6rem 1.3rem;
-  margin: 1.6rem 0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  background: transparent !important;
+  border: none !important;
+  border-top: 1px solid var(--border-light) !important;
+  border-radius: 0 !important;
+  padding: 1.65rem 0 0.25rem 0 !important;
+  margin: 1.65rem 0 0 0 !important;
+  box-shadow: none !important;
 }
 
 .section-title {
-  font-size: 1.08rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  color: var(--primary-dark);
-  margin-bottom: 1.1rem;
-  padding-bottom: 0.6rem;
-  border-bottom: 1.5px solid #e2e8f0;
+  color: var(--text-main);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0;
+  border-bottom: none;
   display: flex;
   align-items: center;
-  gap: 0.55rem;
+  gap: 0.45rem;
 }
 
 .section-icon {
-  font-size: 1.1rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  background: #ffffff;
-  border: 1px solid #cbd5e1;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  font-size: 1.15rem;
+  line-height: 1;
 }
 
-/* Field Blocks */
+/* Fields & Layout */
 .field-block {
-  margin-bottom: 1.1rem;
+  margin-bottom: 1.15rem;
 }
 
 .form-row {
@@ -200,74 +146,61 @@ body::after {
 
 .field-label {
   display: block;
-  font-size: 0.96rem;
+  font-size: 0.92rem;
   font-weight: 600;
-  color: var(--text-main);
+  color: var(--text-sub);
   margin-bottom: 0.4rem;
 }
 
 .req-star {
   color: var(--error);
   font-weight: 700;
+  margin-left: 2px;
 }
 
-/* Inputs & Selects with Crisp White & Smooth Focus Ring */
+/* Inputs & Selects - Clean, White & Consistent */
 input[type="text"],
 input[type="tel"],
 input[type="date"],
 input[type="url"],
 select {
   width: 100%;
-  min-height: 48px;
-  padding: 0.65rem 0.95rem;
-  font-size: 0.96rem;
+  height: 46px;
+  padding: 0 0.85rem;
+  font-size: 0.95rem;
   color: var(--text-main);
   background: #ffffff !important;
-  border: 1.5px solid var(--input-border);
-  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
   outline: none;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
   -webkit-appearance: none;
   appearance: none;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
 input::placeholder {
   color: #94a3b8;
-  font-size: 0.92rem;
+  font-size: 0.9rem;
 }
 
 input:hover,
 select:hover {
-  border-color: #059669;
+  border-color: #94a3b8;
 }
 
 input:focus,
 select:focus {
-  border-color: #059669 !important;
-  box-shadow: 0 0 0 3.5px var(--primary-ring) !important;
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px var(--primary-ring) !important;
   background: #ffffff !important;
 }
 
-/* Date input styling */
 input[type="date"] {
   font-family: 'Kalpurush', sans-serif !important;
   color: #1e293b;
   cursor: pointer;
 }
 
-input[type="date"]::-webkit-calendar-picker-indicator {
-  cursor: pointer;
-  opacity: 0.7;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-input[type="date"]::-webkit-calendar-picker-indicator:hover {
-  opacity: 1;
-  transform: scale(1.1);
-}
-
-/* Custom SVG Chevron for Select Elements */
 .select-wrap {
   position: relative;
 }
@@ -275,54 +208,53 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 .select-wrap::after {
   content: "";
   position: absolute;
-  right: 1rem;
+  right: 0.9rem;
   top: 50%;
   transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23059669' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  width: 16px;
+  height: 16px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23059669' stroke-width='2.2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
   pointer-events: none;
-  transition: transform 0.2s ease;
 }
 
 select {
-  padding-right: 2.5rem;
+  padding-right: 2.35rem;
   cursor: pointer;
 }
 
 select:disabled {
-  background: #f1f5f9 !important;
+  background: #f8fafc !important;
   border-color: #e2e8f0;
   cursor: not-allowed;
-  opacity: 0.75;
+  opacity: 0.65;
 }
 
 .help-text {
   display: block;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   color: var(--text-muted);
   margin-top: 0.35rem;
-  line-height: 1.4;
+  line-height: 1.35;
 }
 
 .extra-input-box {
-  margin-top: 0.6rem;
+  margin-top: 0.5rem;
 }
 
-/* Education Stream Switcher (Segmented Control) */
+/* Education Stream Switcher (Segmented Tab Bar) */
 .education-switcher {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
-  background: #e2e8f0;
-  padding: 0.4rem;
-  border-radius: 12px;
-  margin-top: 0.4rem;
+  gap: 3px;
+  background: #f1f5f9;
+  padding: 3px;
+  border-radius: 9px;
+  margin-top: 0.35rem;
   margin-bottom: 1.25rem;
-  border: 1px solid #cbd5e1;
+  border: 1px solid #e2e8f0;
 }
 
 .switcher-opt {
@@ -346,98 +278,90 @@ select:disabled {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.45rem;
-  padding: 0.75rem 0.5rem;
-  border-radius: 9px;
-  font-size: 0.95rem;
+  gap: 0.4rem;
+  padding: 0.65rem 0.4rem;
+  border-radius: 7px;
+  font-size: 0.9rem;
   font-weight: 600;
-  color: #475569;
+  color: var(--text-muted);
   background: transparent;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.15s ease;
   text-align: center;
 }
 
 .pill-icon {
-  font-size: 1.15rem;
-  line-height: 1;
+  font-size: 1rem;
 }
 
 .switcher-opt:hover .switcher-pill {
-  color: var(--primary);
-  background: rgba(255, 255, 255, 0.6);
+  color: var(--text-main);
 }
 
 .switcher-opt input[type="radio"]:checked + .switcher-pill {
   background: #ffffff;
-  color: #047857;
-  box-shadow: 0 3px 12px rgba(4, 120, 87, 0.16), 0 1px 3px rgba(0, 0, 0, 0.06);
+  color: var(--primary-dark);
   font-weight: 700;
-  border: 1px solid rgba(4, 120, 87, 0.25);
-  transform: scale(1.01);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
-/* Sub Blocks (Madrasa & General) */
-.sub-block-title {
-  font-size: 0.98rem;
-  font-weight: 700;
-  color: #065f46;
-  background: #ecfdf5;
-  border: 1px solid rgba(5, 150, 105, 0.15);
-  border-left: 4px solid #059669;
-  padding: 0.5rem 0.85rem;
-  border-radius: 0 8px 8px 0;
-  margin-bottom: 1.1rem;
-  margin-top: 0.4rem;
-}
-
+/* Sub Blocks (মাদ্রাসা ও সাধারণ শিক্ষা - ফ্ল্যাট ও ক্লিন) */
 .edu-sub-block {
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  animation: fadeInBlock 0.3s ease;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0.75rem 0 0 0 !important;
+  animation: fadeInBlock 0.25s ease;
 }
 
 @keyframes fadeInBlock {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Submit Wrap & Button */
+.sub-block-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-sub);
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed #cbd5e1;
+  padding: 0 0 0.45rem 0;
+  margin-bottom: 1.15rem;
+  margin-top: 0.5rem;
+}
+
+/* Submit Button */
 .submit-wrap {
-  margin-top: 1.8rem;
-  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-light);
 }
 
 .submit-btn {
   width: 100%;
-  min-height: 52px;
-  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  height: 48px;
+  background: var(--primary);
   color: #ffffff;
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   font-weight: 700;
   border: none;
-  border-radius: 12px;
+  border-radius: 9px;
   cursor: pointer;
-  box-shadow: 0 8px 24px -4px rgba(5, 150, 105, 0.35);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.2);
+  transition: all 0.15s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
 }
 
 .submit-btn:hover {
-  background: linear-gradient(135deg, #047857 0%, #064e3b 100%);
-  box-shadow: 0 12px 28px -4px rgba(5, 150, 105, 0.45);
-  transform: translateY(-2px);
+  background: var(--primary-hover);
+  box-shadow: 0 6px 16px rgba(5, 150, 105, 0.3);
 }
 
 .submit-btn:active {
-  transform: translateY(0);
+  transform: translateY(1px);
 }
 
 .spinner {
@@ -454,95 +378,41 @@ select:disabled {
   to { transform: rotate(360deg); }
 }
 
-/* Discreet footer */
-.clean-footer {
-  text-align: center;
-  margin-top: 1.5rem;
-}
-
-.discreet-link {
-  background: none;
-  border: none;
-  opacity: 0.2;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: opacity 0.2s;
-}
-.discreet-link:hover {
-  opacity: 0.8;
-}
-
-/* Success Modal with Glassmorphism */
+/* ==========================================================================
+   SUCCESS MODAL & RECEIPT - সম্পূর্ণ সুন্দর ও সুশৃঙ্খল
+   ========================================================================== */
 .receipt-dialog {
   border: none;
-  background: transparent;
+  border-radius: 16px;
   padding: 0;
-  max-width: 500px;
-  width: 92%;
+  max-width: 440px;
+  width: 90%;
   margin: auto;
-  border-radius: var(--radius);
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.25);
+  background: #ffffff;
 }
 
 .receipt-dialog::backdrop {
-  background: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(4px);
 }
 
 .success-box {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  border-radius: var(--radius);
-  padding: 2.25rem 1.75rem;
+  padding: 2rem 1.6rem;
   text-align: center;
 }
 
-/* Arabic Jazakallah Animation */
 .arabic-jazakallah-wrap {
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.65rem;
 }
 
 .arabic-jazakallah {
-  font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade', serif !important;
-  font-size: 2.3rem;
+  font-family: 'Amiri', serif !important;
+  font-size: 2.2rem;
   font-weight: 700;
-  line-height: 1.4;
-  direction: rtl;
   color: #047857;
-  display: inline-block;
-  transform-origin: center center;
-  animation: jazakallahPop 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, shimmerGlow 3s ease-in-out infinite alternate;
-}
-
-@keyframes jazakallahPop {
-  0% {
-    opacity: 0;
-    transform: scale(0.6) translateY(24px);
-    filter: blur(8px);
-  }
-  60% {
-    opacity: 1;
-    transform: scale(1.08) translateY(-3px);
-    filter: blur(0);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-    filter: blur(0);
-  }
-}
-
-@keyframes shimmerGlow {
-  0% {
-    text-shadow: 0 2px 10px rgba(4, 120, 87, 0.25);
-  }
-  100% {
-    text-shadow: 0 2px 20px rgba(217, 119, 6, 0.5);
-    color: #065f46;
-  }
+  line-height: 1.35;
+  direction: rtl;
 }
 
 .arabic-divider {
@@ -550,36 +420,35 @@ select:disabled {
   align-items: center;
   justify-content: center;
   margin-top: 0.15rem;
-  color: var(--accent-gold);
-  font-size: 0.9rem;
-  opacity: 0.8;
+  color: #d97706;
+  font-size: 0.85rem;
+  opacity: 0.75;
 }
 
 .success-heading {
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   font-weight: 700;
-  color: #0f172a;
-  margin-bottom: 1.25rem;
-  line-height: 1.3;
+  color: var(--text-main);
+  margin-bottom: 1.15rem;
+  line-height: 1.35;
 }
 
-/* Notice Card */
 .notice-card {
-  background: rgba(240, 253, 244, 0.88);
-  border: 1.5px solid #86efac;
-  border-radius: 10px;
-  padding: 0.95rem 1.1rem;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
   display: flex;
   align-items: center;
-  gap: 0.85rem;
-  margin-bottom: 1.35rem;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
   text-align: left;
 }
 
 .notice-icon {
-  width: 28px;
-  height: 28px;
-  color: #15803d;
+  width: 24px;
+  height: 24px;
+  color: #166534;
   flex-shrink: 0;
 }
 
@@ -589,56 +458,68 @@ select:disabled {
 }
 
 .notice-text {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: #166534;
   line-height: 1.45;
 }
 
-/* Mini summary */
+/* Mini Summary: উল্লম্বভাবে সুন্দর সুবিন্যস্ত তালিকা (কোনো ওভারল্যাপিং নেই) */
 .mini-summary {
-  background: rgba(248, 250, 252, 0.85);
-  border: 1px solid rgba(226, 232, 240, 0.9);
-  border-radius: 8px;
-  padding: 0.65rem 0.9rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
   margin-bottom: 1.35rem;
+  padding: 0.25rem 0;
   display: flex;
-  justify-content: space-around;
-  font-size: 0.9rem;
+  flex-direction: column;
+  text-align: left;
 }
 
-.summary-line {
+.summary-row {
   display: flex;
-  gap: 0.4rem;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0.65rem 0.95rem;
+  border-bottom: 1px solid var(--border-light);
+  gap: 0.85rem;
+}
+
+.summary-row:last-child {
+  border-bottom: none;
 }
 
 .s-label {
+  font-size: 0.88rem;
   color: var(--text-muted);
+  font-weight: 500;
+  flex-shrink: 0;
 }
 
 .s-val {
+  font-size: 0.92rem;
   font-weight: 700;
   color: var(--text-main);
+  text-align: right;
+  word-break: break-word;
+  max-width: 65%;
 }
 
 .action-btn {
   width: 100%;
-  min-height: 46px;
-  padding: 0.65rem 1.5rem;
-  background: linear-gradient(135deg, var(--primary-hover), var(--primary));
+  height: 46px;
+  background: var(--primary);
   color: white;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0 4px 12px rgba(4, 120, 87, 0.25);
+  transition: background 0.15s ease;
 }
 
 .action-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(4, 120, 87, 0.35);
+  background: var(--primary-hover);
 }
 
 /* Toast */
@@ -654,52 +535,58 @@ select:disabled {
 
 .toast {
   padding: 0.75rem 1.15rem;
-  background: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(10px);
+  background: #ffffff;
   color: var(--text-main);
   border-radius: 8px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
   border-left: 4px solid var(--primary);
   font-size: 0.925rem;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid var(--primary);
 }
 
 .toast.toast-error {
   border-left-color: var(--error);
 }
 
-/* Mobile View (অল্প জায়গার মধ্যে মসৃণ গ্লাসমরফিজম) */
+/* Responsive Styles */
 @media (max-width: 600px) {
   .page-wrap {
-    margin: 0.75rem auto 2rem auto;
+    margin: 0.75rem auto 2.5rem auto;
     padding: 0 0.65rem;
   }
+  
   .form-box {
     padding: 1.35rem 1.15rem;
-    border-radius: 10px;
+    border-radius: 12px;
   }
+  
   .main-heading {
     font-size: 1.5rem;
   }
+  
   .form-row {
     grid-template-columns: 1fr;
     gap: 0;
   }
-  .address-section,
-  .academic-section {
-    padding: 0.95rem 0.85rem 0.25rem 0.85rem;
-  }
-  .arabic-jazakallah {
-    font-size: 1.95rem;
-  }
+  
   .education-switcher {
     grid-template-columns: 1fr;
-    gap: 0.35rem;
+    gap: 3px;
   }
+  
   .switcher-pill {
-    padding: 0.55rem 0.5rem;
+    padding: 0.55rem 0.65rem;
     font-size: 0.88rem;
     justify-content: flex-start;
-    padding-left: 1rem;
+  }
+  
+  .success-box {
+    padding: 1.5rem 1.15rem;
+  }
+  
+  .arabic-jazakallah {
+    font-size: 1.95rem;
   }
 }
 
